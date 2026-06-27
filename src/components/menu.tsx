@@ -4,13 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 
-const items = [
-  "Home",
-  "Instruction",
-  "Answers",
-  "About the Experience",
-  "Listening to Bats",
-];
+const items = ["Home"];
 
 // smooth easing for the bars morph
 const morph = { duration: 0.4, ease: [0.45, 0, 0.2, 1] as const };
