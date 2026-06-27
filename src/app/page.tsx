@@ -14,6 +14,14 @@ const REVEAL_DELAY = 3.3;
 
 type Phase = "input" | "wave" | "result";
 
+// same hash the result screen uses, so the card number and the ripple
+// count are always derived from the question in lockstep.
+function hash(s: string) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+
 /** synthesized "sonar" echo — three decaying pings, no audio file needed */
 function playSonar() {
   try {
@@ -46,16 +54,17 @@ export default function Home() {
   const [question, setQuestion] = useState("");
   const [phase, setPhase] = useState<Phase>("input");
 
-  // drop count from question length: > 5 words -> 4 drops, else 3 drops
-  const wordCount = question.trim().split(/\s+/).filter(Boolean).length;
-  const drops = wordCount > 5 ? 4 : 3;
+  // the card number (1..9) decides how many ripples the answer has
+  const drops = (hash(question || "the cat cloud") % 9) + 1;
 
-  // safety fallback in case the ripple's onComplete never fires
+  // safety fallback in case the ripple's onComplete never fires —
+  // scaled to the drop count so longer sequences are not cut short
   useEffect(() => {
     if (phase !== "wave") return;
-    const t = setTimeout(() => setPhase("result"), 15000);
+    const expectedMs = (0.4 + (drops - 1) * 1.7 + 0.8 + 2.4 + 2) * 1000;
+    const t = setTimeout(() => setPhase("result"), expectedMs);
     return () => clearTimeout(t);
-  }, [phase]);
+  }, [phase, drops]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();

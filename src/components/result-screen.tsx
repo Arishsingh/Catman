@@ -39,7 +39,36 @@ const catIntros = [
   "Out in the dark the cat moves like spilled ink finding the cracks, pouring itself into spaces that should be too small, vanishing and reappearing a room away. Nothing holds it and nothing surprises it. It paused its endless circuit of the night only to consider what you asked.",
   "The cat keeps one ear turned to the world you can see and one turned to the one you cannot, and it trusts the second far more than the first. It heard your question arrive in both at once. What it tells you now comes from the side of the dark you are not allowed to enter.",
   "A cat does not chase what it wants; it waits until the want comes to it, and it always does. It has been sitting in this stillness so long that the room has begun to arrange itself around its patience. Your question disturbed that stillness for exactly as long as it took to read you.",
-  "The cat watched the three ripples spread and did not flinch, because it has seen the dark do stranger things and keep its secrets. It understands the language of small disturbances — a twitch, a hush, a question asked too carefully. Yours told it more than you meant it to.",
+  "The cat watched the ripples spread and did not flinch, because it has seen the dark do stranger things and keep its secrets. It understands the language of small disturbances — a twitch, a hush, a question asked too carefully. Yours told it more than you meant it to.",
+];
+
+const numberWords = [
+  "zero", "one", "two", "three", "four",
+  "five", "six", "seven", "eight", "nine",
+];
+
+// A mysterious, self-mirroring middle passage, composed from three pools so it
+// effectively never repeats. It describes the ripples, then turns into a mirror.
+const mirrorOpenings = [
+  "The ripples move outward through the dark, each one carrying a tremor that passes over fur and floor and the long quiet of the room.",
+  "The ripples spread the way thoughts do at night, widening into the black until they touch the edges of things you cannot name.",
+  "The ripples travel out and do not return, leaving the surface changed in ways too small to see and too deep to undo.",
+  "The ripples cross the water like questions crossing a mind, overlapping, interfering, never quite settling into stillness.",
+  "The ripples open in rings, one inside the next, the way a person keeps a self inside a self inside the face they show the room.",
+];
+const mirrorMiddles = [
+  "What stares back from the water is not the cat and not the dark, but the shape of your own attention, bent slightly by what you were hoping to find.",
+  "Look long enough and the surface stops showing the room and starts showing you — the wanting under the wording, the fear folded inside the calm.",
+  "The water does not answer; it reflects, and what it reflects is the exact thing you have been trying not to look at.",
+  "In the trembling surface you can almost make out a face, and it is yours, asking a question it already knows the answer to.",
+  "Every ripple is a small mirror, and turned the right way each one shows the same thing: a person standing in the dark, asking to be told who they are.",
+];
+const mirrorCloses = [
+  "What we ask of the dark says more about us than the dark could ever say back.",
+  "The answer was never the point; the asking is the confession, and you have already made it.",
+  "You came for a verdict and met a reflection, which is the only honest thing the night ever gives.",
+  "Whatever the cat decides, the truer reading is the one you just made of yourself.",
+  "The shape of your wondering was drawn long before any answer arrived, and it is unmistakably yours.",
 ];
 
 // All 48 Laws of Power, each rewritten as a long personal reading: first the
@@ -216,6 +245,12 @@ export function ResultScreen({
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
   const reading = lawReadings[hsh % lawReadings.length];
   const catIntro = catIntros[(hsh >> 9) % catIntros.length];
+  const rippleWord = numberWords[num] ?? String(num);
+  const mirror = [
+    mirrorOpenings[(hsh >> 2) % mirrorOpenings.length],
+    mirrorMiddles[(hsh >> 8) % mirrorMiddles.length],
+    mirrorCloses[(hsh >> 14) % mirrorCloses.length],
+  ].join(" ");
 
   return (
     <motion.div
@@ -303,14 +338,10 @@ export function ResultScreen({
           animate="show"
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
-          <p>The Cat Cloud answered with three ripples.</p>
           <p>
-            They move outward through the dark, carrying small tremors that pass
-            over fur and floor and the long quiet of the room. Cats, like us,
-            keep their fears close. They freeze at a sound that may be nothing,
-            or melt into stillness when something unseen shifts nearby — instinct
-            bending what is real into what might be.
+            The Cat Cloud answered with {rippleWord} ripple{num === 1 ? "" : "s"}.
           </p>
+          <p>{mirror}</p>
           <p>{catIntro}</p>
           <p className="pt-2 text-white/95">
             Well — the question you asked says a lot about you.
