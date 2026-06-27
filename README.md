@@ -1,4 +1,4 @@
-                                   # Cat Cloud
+                                   # CatMan
 
 Ask a cat a yes-or-no question and the dark answers back.
 
