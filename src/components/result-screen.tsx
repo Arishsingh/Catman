@@ -325,7 +325,7 @@ export function ResultScreen({
           <p>
             The Cat Cloud answered with {rippleWord} ripple{num === 1 ? "" : "s"}.
           </p>
-          <p>{lore.body}</p>
+          <p>look — {lore.body}</p>
           <p className="text-white/50">{lore.close}</p>
           <p className="pt-2">btw {reading}</p>
         </motion.div>
@@ -338,7 +338,7 @@ export function ResultScreen({
           className="mt-16 border-t border-white/15 pt-10 text-center"
         >
           <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/70">
-            The answer to your question is
+            so — the answer to your question is
           </p>
           <p className="mt-3 font-['Share_Tech'] text-6xl font-bold">{answer}</p>
         </motion.div>
