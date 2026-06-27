@@ -22,64 +22,57 @@ function hash(s: string) {
   return h;
 }
 
-// A reading is composed from three fragment pools (opening / insight / law),
-// each indexed by a different slice of the hash. The combinations make it
-// effectively unique per question, and it reads as one cat-voiced paragraph.
-const openings = [
-  "You didn't really come for a yes or a no — you came for permission to do what you'd already chosen.",
-  "The question you typed is a mask; the real one hides behind it, and the cat sees both.",
-  "You ask this lightly, but it has been circling you for a long while now.",
-  "Some part of you is performing even here, asking the cat as if someone were watching.",
-  "You called this curiosity, though it is really about what you stand to gain.",
-  "You want the certainty handed to you, yet you already suspect the answer.",
-  "You phrased it so carefully, half-hoping the wording might bend the truth.",
-  "You came looking for a sign, which means you have quietly stopped trusting your own.",
-  "You ask the smallest version of a much larger question, and the cat is not fooled.",
-  "You hold this question out like a treat, expecting the world to come when called.",
-];
-const insights = [
-  "Power was never in the asking — it was in deciding before you asked.",
-  "What you reveal in a question, you can never quite take back.",
-  "The one who needs the answer least is always the one who controls it.",
-  "Wanting a thing too openly is the surest way to lose it.",
-  "Boldness, not hesitation, is the only move you have left.",
-  "Say less, and the silence will rearrange itself in your favor.",
-  "The patient creature eats; the anxious one only watches the door.",
-  "Whatever you chase will run, and whatever you ignore will follow you home.",
-  "Certainty is a thing you build, not a thing you are given.",
-  "The mask you wear long enough stops being a mask at all — choose it well.",
-];
-const laws = [
-  "The cat already knew, and the cat said nothing — learn from that.",
-  "Conceal your intent, and even a no becomes useful to you.",
-  "Leave the room, and watch carefully what comes looking for you.",
-  "Land first; decide where you meant to be afterward.",
-  "Keep your reasons to yourself and your claws for later.",
-  "Move as though you have already won, and the winning follows.",
-  "Be still until the moment is unmistakably yours.",
-  "Want nothing visibly, and you may quietly have everything.",
-  "Let them guess at your shape; a thing without edges cannot be cornered.",
-  "Strike once, cleanly, and never explain the strike.",
-];
-const observations = [
-  "The cat has watched you longer than you would like to admit, and it has noticed the pattern in how you reach for things.",
-  "There is a hunger under this question, the kind that pretends to be patience while it paces the room.",
-  "You measure the world in outcomes, in wins and losses, when the cat measures only in warmth and distance.",
-  "Beneath the calm wording lies a fear you have not named, and naming it is half of mastering it.",
-  "You are braver than your question sounds, and more cautious than you pretend to be.",
-  "The thing you fear losing is the same thing you refuse to hold loosely.",
-  "You ask the night for permission you could simply grant yourself.",
-  "Every question you ask is a small confession of what you cannot yet control.",
-];
-const directives = [
-  "So watch how the cat does it: it commits to nothing it cannot abandon, and abandons nothing it has truly chosen.",
-  "So do as the predator does — wait, weigh, and then move all at once, leaving no room for second-guessing.",
-  "So gather your intent quietly, show the world only the result, and let them wonder how you arrived.",
-  "So stop asking permission of shadows; decide, and let the decision become the truth.",
-  "So hold your power in reserve, spend it once, and spend it where it cannot be undone.",
-  "So let go of the outcome you are clutching, and watch how quickly it turns and follows you.",
-  "So make yourself difficult to read, and the room will arrange itself around your silence.",
-  "So move first, apologize never, and let the world catch up to the shape you have already taken.",
+// All 48 Laws of Power, each rewritten as a reading about the person asking.
+// One is chosen by the question's hash, so it stays consistent per question.
+const lawReadings = [
+  "You shrink yourself around the people you admire, dimming your own light so theirs burns brighter. The cat never apologizes for taking the warm spot, and the question you ask reveals someone still waiting for permission to shine.",
+  "You give your warmth to the wrong people and waste your sharpness on the wrong enemies. A known foe is more useful than an uncertain friend — and your question shows you have not yet learned who is which.",
+  "You announce what you want before you have it, and so it keeps slipping away. The way you asked this lays your hand on the table; learn to let no one read your next move until it is already made.",
+  "You explain too much, hoping words will earn what silence could simply command. The length of your wondering gives you away — say less, and you will seem larger than the question.",
+  "You guard everything except the one thing that decides how the world treats you: your name. The care in your question shows you sense its weight, even as you forget to protect it.",
+  "You ache to be seen, then flinch the moment the eyes arrive. Your question is a small bid for attention; decide whether to truly be seen, because there is no power in the doorway between.",
+  "You do the heavy work and let others walk off with the credit. Even now you hand the cat the decision that is yours to make — learn to stand where the praise lands.",
+  "You chase the thing you want across the whole room. Sit still instead; the way you reached out with this question shows someone who has not yet learned to make the world come to them.",
+  "You argue to win and collect only resentment. You wanted the cat to settle a thing words never could — prove it by doing, for actions leave the mark that arguments never do.",
+  "You keep feeding a worry that only drains you, and this question is one more saucer of milk left out for it. The cat avoids the unlucky and the unhappy, because misfortune is catching.",
+  "You give yourself away too freely, then wonder why you are so easily set down. Your question shows a generous, dependent heart — make yourself necessary, and you will never be discarded.",
+  "You are honest only when it serves you and generous only when watched, and some of that is folded into how you asked. A little real kindness disarms — just never forget that you are the one wielding it.",
+  "You ask for help by appealing to mercy when you should appeal to hunger. This question pleads where it could persuade — show people what they gain, and they will move for you.",
+  "You wear friendliness like a coat while gathering what you need beneath it. The cat purrs and watches at once, and your careful question says you already know how to do both.",
+  "You leave your fights half-finished and let old troubles recover their strength. The hesitation behind this question is the same hesitation that lets enemies return — finish what you start.",
+  "You are always available, and so you are never quite missed. Asking the moment it crossed your mind shows it; withdraw a little, for absence is what teaches people your worth.",
+  "You have made yourself easy to predict, and the predictable are easy to manage. Even this question runs along a groove you have worn — keep a little of the cat's unpredictability and watch the room lean in.",
+  "You wall yourself off and call it safety, then ask the dark instead of a person. The cat hunts the open floor; your question shows the slow danger of choosing isolation.",
+  "You spend your sharpness on the wrong people and the wrong moments. Before you bare a claw — or ask a thing like this — learn first exactly who you are dealing with.",
+  "You commit too quickly, to plans and to people, and your question is already half a vow. Stay a little uncommitted, and watch how everyone begins to court your choice.",
+  "You need to be seen as the clever one even when it costs you, and this clever little question proves it. Sometimes the cat plays dumb to catch what cleverness would only frighten off.",
+  "You fight hardest exactly when losing, when surrender would buy you time and turn the tide. The strain in your question is that same refusal — bend now, and break them later on your terms.",
+  "You scatter yourself across too many wants, and this is only the loudest of them today. Concentrate your force on one thing and it will yield what ten half-efforts never could.",
+  "You bristle against the room when you could glide through it. Your blunt little question shows it; there is real power in the perfect courtier, in pleasing without ever surrendering.",
+  "You let the world decide who you are, then ask the world to confirm it. Re-create yourself instead — the cat answers to no name it did not choose.",
+  "You get your hands dirty doing what others should be doing for you. Even this question is work you could have delegated to your own nerve — keep your hands clean and let others leave the fingerprints.",
+  "You hand your faith to whoever speaks loudest of certainty, and tonight that voice is a cat. People ache to believe; be careful, for your question shows how readily you let someone else do your believing.",
+  "You hesitate at the very edge of the leap, and hesitation is the only true failure. This question is you standing at that edge — enter with boldness, because half-measures invite the wound.",
+  "You begin things you have not finished imagining, and this question is a door opened onto a room you have not mapped. Plan to the end, the way the cat sees the landing before the jump.",
+  "You let everyone watch how hard you strain. The visible effort in your question undoes you — make it look effortless, for ease is what convinces others you are more than you are.",
+  "You play with cards other people dealt you and call the result fate. Control the options instead; even in asking this, you handed the cat the deck that should have been yours.",
+  "You offer people the dull truth when they hunger for a dream, and you asked the cat for fact when you wanted a vision. Speak to the fantasy, and they will follow you into it.",
+  "You push on people where they are strongest and wonder why they do not move. Find the soft place — the one need, the one fear your question keeps circling — and you will never have to push hard again.",
+  "You keep asking the world's permission to feel worthy, this question among them. Carry yourself like a king, and the world will hand you the crown it was only hiding.",
+  "You act too early or far too late, rarely in the one right moment. The timing of this question betrays the habit — the cat waits in stillness, then moves all at once, and timing is the whole hunt.",
+  "You chase the thing you cannot have until the wanting owns you. This question is the leash it holds — disdain it, turn your back, for ignoring is the sharpest revenge the cat knows.",
+  "You hand people plain truth when you should hand them a spectacle. Your unadorned question shows it; give them something to see, and they will believe whatever you wish.",
+  "You say aloud every contrary thought you keep, this one included. Think as freely as you like, but behave like the others, and you will move untouched among them.",
+  "You wait for calm water before you act, but calm water hides the fish. Your patient question is a still pond — stir things up, because confusion is where the cat finds its opening.",
+  "You reach for what is offered free and pay for it later in ways you cannot yet see. Even a free answer from a cat has its price — despise the free lunch, for what costs nothing usually costs everything.",
+  "You strain to fill a shadow far larger than your own. Step out of the great one's shoes the question keeps measuring you against, and leave a smaller print that is wholly yours.",
+  "You fight the whole crowd when you should remove the one who leads it. Your question scatters its force the same way — strike the shepherd, and the rest disperse on their own.",
+  "You demand with force what you could win with warmth. This question reaches with a hand half-closed into a fist — work on the heart first, for a willing creature needs no leash.",
+  "You react to provocation in exactly the way that is expected of you. The predictability lives in this question too — mirror them instead, hand back their own behavior, and watch it unsettle them.",
+  "You demand sweeping change all at once and frighten everyone into resisting you. Your question wants the whole answer this instant — preach change, but turn the wheel slowly.",
+  "You strain to seem flawless, and flawlessness breeds only envy. The polish on your question is part of the armor — show one small crack, for it is the imperfect cat that is allowed near the fire.",
+  "You win, then keep grasping past the win until it sours in your hands. This question reaches for one certainty too many — learn where to stop, the way the cat leaves the table while still ahead.",
+  "You cling to fixed plans that the world keeps quietly dissolving. Your need for a hard yes or no is that grip — assume the cat's formlessness, be water and shadow, and nothing can corner you.",
 ];
 
 const fade = {
@@ -200,13 +193,7 @@ export function ResultScreen({
   const num = (hsh % 9) + 1;
   const word = categories[hsh % categories.length];
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
-  const reading = [
-    openings[hsh % openings.length],
-    observations[(hsh >> 4) % observations.length],
-    insights[(hsh >> 7) % insights.length],
-    directives[(hsh >> 10) % directives.length],
-    laws[(hsh >> 13) % laws.length],
-  ].join(" ");
+  const reading = lawReadings[hsh % lawReadings.length];
 
   return (
     <motion.div
