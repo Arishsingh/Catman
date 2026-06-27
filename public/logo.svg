@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- PLACEHOLDER MARK — replace this file with your real logo.
+       Shapes must be opaque on a transparent background (mask uses alpha). -->
+  <g fill="#000000">
+    <!-- center diamond -->
+    <path d="M100 72 C110 88 110 112 100 128 C90 112 90 88 100 72 Z" />
+    <!-- top crescent -->
+    <path d="M82 44 C92 38 108 38 118 44 C108 50 92 50 82 44 Z" />
+    <!-- bottom crescent -->
+    <path d="M82 156 C92 162 108 162 118 156 C108 150 92 150 82 156 Z" />
+    <!-- upper-right blade -->
+    <path d="M112 86 C134 74 152 58 166 44 C160 62 146 80 122 98 C118 94 115 90 112 86 Z" />
+    <!-- upper-left blade -->
+    <path d="M88 86 C66 74 48 58 34 44 C40 62 54 80 78 98 C82 94 85 90 88 86 Z" />
+    <!-- lower-right blade -->
+    <path d="M112 114 C134 126 152 142 166 156 C160 138 146 120 122 102 C118 106 115 110 112 114 Z" />
+    <!-- lower-left blade -->
+    <path d="M88 114 C66 126 48 142 34 156 C40 138 54 120 78 102 C82 106 85 110 88 114 Z" />
+  </g>
+</svg>
