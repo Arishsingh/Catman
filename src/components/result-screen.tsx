@@ -22,57 +22,66 @@ function hash(s: string) {
   return h;
 }
 
-// All 48 Laws of Power, each rewritten as a reading about the person asking.
-// One is chosen by the question's hash, so it stays consistent per question.
+// What the cat thinks of itself — varied by hash, sets the tone first.
+const catIntros = [
+  "The cat does not answer the way you want it to. It watches, it waits, it gives affection on its own terms and attention only when it decides you have earned it — never because it was asked. That is the first thing to understand about the creature you came to.",
+  "The cat owes you nothing and pretends nothing. It takes the one patch of sun, ignores your calling, and comes close only when it has judged you worth the closeness. It is the most honest thing in this dark room, and it has just looked straight through you.",
+  "A cat keeps its fears close and its intentions closer. It freezes at a sound that may be nothing, melts into stillness when the unseen shifts, and lets you guess at all of it. It survives by being unreadable — and it has been reading you this whole time.",
+  "The cat answered with three ripples through the dark, the way it answers everything: without hurry, without explanation, and without the smallest need for your approval. It moves through the world owing no one a reason, and it wonders why you cannot.",
+];
+
+// All 48 Laws of Power, each rewritten as a long personal reading: first the
+// good the cat sees in you, then the lack it cannot help but name. One is chosen
+// by the question's hash, so it stays consistent per question.
 const lawReadings = [
-  "You shrink yourself around the people you admire, dimming your own light so theirs burns brighter. The cat never apologizes for taking the warm spot, and the question you ask reveals someone still waiting for permission to shine.",
-  "You give your warmth to the wrong people and waste your sharpness on the wrong enemies. A known foe is more useful than an uncertain friend — and your question shows you have not yet learned who is which.",
-  "You announce what you want before you have it, and so it keeps slipping away. The way you asked this lays your hand on the table; learn to let no one read your next move until it is already made.",
-  "You explain too much, hoping words will earn what silence could simply command. The length of your wondering gives you away — say less, and you will seem larger than the question.",
-  "You guard everything except the one thing that decides how the world treats you: your name. The care in your question shows you sense its weight, even as you forget to protect it.",
-  "You ache to be seen, then flinch the moment the eyes arrive. Your question is a small bid for attention; decide whether to truly be seen, because there is no power in the doorway between.",
-  "You do the heavy work and let others walk off with the credit. Even now you hand the cat the decision that is yours to make — learn to stand where the praise lands.",
-  "You chase the thing you want across the whole room. Sit still instead; the way you reached out with this question shows someone who has not yet learned to make the world come to them.",
-  "You argue to win and collect only resentment. You wanted the cat to settle a thing words never could — prove it by doing, for actions leave the mark that arguments never do.",
-  "You keep feeding a worry that only drains you, and this question is one more saucer of milk left out for it. The cat avoids the unlucky and the unhappy, because misfortune is catching.",
-  "You give yourself away too freely, then wonder why you are so easily set down. Your question shows a generous, dependent heart — make yourself necessary, and you will never be discarded.",
-  "You are honest only when it serves you and generous only when watched, and some of that is folded into how you asked. A little real kindness disarms — just never forget that you are the one wielding it.",
-  "You ask for help by appealing to mercy when you should appeal to hunger. This question pleads where it could persuade — show people what they gain, and they will move for you.",
-  "You wear friendliness like a coat while gathering what you need beneath it. The cat purrs and watches at once, and your careful question says you already know how to do both.",
-  "You leave your fights half-finished and let old troubles recover their strength. The hesitation behind this question is the same hesitation that lets enemies return — finish what you start.",
-  "You are always available, and so you are never quite missed. Asking the moment it crossed your mind shows it; withdraw a little, for absence is what teaches people your worth.",
-  "You have made yourself easy to predict, and the predictable are easy to manage. Even this question runs along a groove you have worn — keep a little of the cat's unpredictability and watch the room lean in.",
-  "You wall yourself off and call it safety, then ask the dark instead of a person. The cat hunts the open floor; your question shows the slow danger of choosing isolation.",
-  "You spend your sharpness on the wrong people and the wrong moments. Before you bare a claw — or ask a thing like this — learn first exactly who you are dealing with.",
-  "You commit too quickly, to plans and to people, and your question is already half a vow. Stay a little uncommitted, and watch how everyone begins to court your choice.",
-  "You need to be seen as the clever one even when it costs you, and this clever little question proves it. Sometimes the cat plays dumb to catch what cleverness would only frighten off.",
-  "You fight hardest exactly when losing, when surrender would buy you time and turn the tide. The strain in your question is that same refusal — bend now, and break them later on your terms.",
-  "You scatter yourself across too many wants, and this is only the loudest of them today. Concentrate your force on one thing and it will yield what ten half-efforts never could.",
-  "You bristle against the room when you could glide through it. Your blunt little question shows it; there is real power in the perfect courtier, in pleasing without ever surrendering.",
-  "You let the world decide who you are, then ask the world to confirm it. Re-create yourself instead — the cat answers to no name it did not choose.",
-  "You get your hands dirty doing what others should be doing for you. Even this question is work you could have delegated to your own nerve — keep your hands clean and let others leave the fingerprints.",
-  "You hand your faith to whoever speaks loudest of certainty, and tonight that voice is a cat. People ache to believe; be careful, for your question shows how readily you let someone else do your believing.",
-  "You hesitate at the very edge of the leap, and hesitation is the only true failure. This question is you standing at that edge — enter with boldness, because half-measures invite the wound.",
-  "You begin things you have not finished imagining, and this question is a door opened onto a room you have not mapped. Plan to the end, the way the cat sees the landing before the jump.",
-  "You let everyone watch how hard you strain. The visible effort in your question undoes you — make it look effortless, for ease is what convinces others you are more than you are.",
-  "You play with cards other people dealt you and call the result fate. Control the options instead; even in asking this, you handed the cat the deck that should have been yours.",
-  "You offer people the dull truth when they hunger for a dream, and you asked the cat for fact when you wanted a vision. Speak to the fantasy, and they will follow you into it.",
-  "You push on people where they are strongest and wonder why they do not move. Find the soft place — the one need, the one fear your question keeps circling — and you will never have to push hard again.",
-  "You keep asking the world's permission to feel worthy, this question among them. Carry yourself like a king, and the world will hand you the crown it was only hiding.",
-  "You act too early or far too late, rarely in the one right moment. The timing of this question betrays the habit — the cat waits in stillness, then moves all at once, and timing is the whole hunt.",
-  "You chase the thing you cannot have until the wanting owns you. This question is the leash it holds — disdain it, turn your back, for ignoring is the sharpest revenge the cat knows.",
-  "You hand people plain truth when you should hand them a spectacle. Your unadorned question shows it; give them something to see, and they will believe whatever you wish.",
-  "You say aloud every contrary thought you keep, this one included. Think as freely as you like, but behave like the others, and you will move untouched among them.",
-  "You wait for calm water before you act, but calm water hides the fish. Your patient question is a still pond — stir things up, because confusion is where the cat finds its opening.",
-  "You reach for what is offered free and pay for it later in ways you cannot yet see. Even a free answer from a cat has its price — despise the free lunch, for what costs nothing usually costs everything.",
-  "You strain to fill a shadow far larger than your own. Step out of the great one's shoes the question keeps measuring you against, and leave a smaller print that is wholly yours.",
-  "You fight the whole crowd when you should remove the one who leads it. Your question scatters its force the same way — strike the shepherd, and the rest disperse on their own.",
-  "You demand with force what you could win with warmth. This question reaches with a hand half-closed into a fist — work on the heart first, for a willing creature needs no leash.",
-  "You react to provocation in exactly the way that is expected of you. The predictability lives in this question too — mirror them instead, hand back their own behavior, and watch it unsettle them.",
-  "You demand sweeping change all at once and frighten everyone into resisting you. Your question wants the whole answer this instant — preach change, but turn the wheel slowly.",
-  "You strain to seem flawless, and flawlessness breeds only envy. The polish on your question is part of the armor — show one small crack, for it is the imperfect cat that is allowed near the fire.",
-  "You win, then keep grasping past the win until it sours in your hands. This question reaches for one certainty too many — learn where to stop, the way the cat leaves the table while still ahead.",
-  "You cling to fixed plans that the world keeps quietly dissolving. Your need for a hard yes or no is that grip — assume the cat's formlessness, be water and shadow, and nothing can corner you.",
+  "There is a quiet brilliance in you that you keep folding away so the people around you feel comfortable, and that instinct is genuinely kind — others feel safe near you, lighter for your presence. But you have dimmed yourself so reliably that the world now expects your shadow instead of your light, and you have started calling that habit humility when it is really fear. You are starving for a recognition you refuse to claim, and until you stop apologizing for the warm spot, you will keep watching smaller people take it from you.",
+  "You love loyally and you forgive quickly, and that open heart is rarer than you know — people are lucky to be kept by you. But you pour that warmth into people who showed you long ago exactly who they are, and you keep mistaking the comfort of the familiar for safety. You are too trusting to be powerful and too soft to admit it, and the painful truth is that a known enemy would serve you better than half the friends you keep excusing.",
+  "You are open and sincere, and there is a rare honesty in the way you move through the world — people can feel that you mean what you say. But you announce what you want before it is ripe, and so your hopes keep dying in other people's hands before you can protect them. You crave to be understood far more than you want to win, and that hunger to be seen is the very reason you so often lose.",
+  "You feel things deeply and you are brave enough to want to be known, and that courage to be seen is something most people never find. But you explain yourself to those who never asked, handing away your mystery for the smallest scrap of approval. You talk to fill a silence you are frightened of, and every word you spend trying to be understood makes you a little smaller in the room.",
+  "You care how you are seen, and underneath that is a real wish to be good and not merely to look good — that decency is true. But you guard every little thing except the one that decides your fate: your name, your story, which you leave for others to write while you stay busy being kind. You are too passive to defend yourself and too proud to ask for help, and your reputation is slipping through fingers you keep politely folded.",
+  "You have presence — people notice when you enter, whether or not you let yourself believe it. But you reach for attention and then flinch the instant it lands on you, wanting to be seen and terrified of being looked at. You live in the doorway between hiding and shining, and there is no power in that threshold, only the ache of being almost-chosen, again and again.",
+  "You are the one who actually does the work, and that quiet diligence is a real strength others rely on more than they say. But you let louder people walk off with the credit while you whisper to yourself that the work is its own reward. You are afraid that claiming what you earned would make you greedy, and that fear is the leash that keeps you doing brilliant work in someone else's name.",
+  "You are persistent and warm, and you give chase because you genuinely care — there is nothing cold in you. But you are always the one crossing the room, always reaching first, and the people in your life have quietly learned they never have to move for you. You confuse effort with worth, and you are exhausted from pursuing a world you were always meant to make come to you.",
+  "You are thoughtful, and you believe in reason in a way that is rarer than you think — you want to be fair. But you argue to be right when you should simply act, gathering resentment where you meant to gather agreement. You need the last word more than you need the victory, and that need has cost you friendships and chances you will not let yourself count.",
+  "You are compassionate, and you stay loyal to people through their lowest seasons — that steadfastness is genuinely beautiful. But you keep feeding worries and people that only drain you, mistaking endurance for love and exhaustion for virtue. You absorb other people's misfortune as if it were your duty, and you are slowly drowning in lives that were never yours to carry.",
+  "You are giving, and people lean on you because you are truly dependable — that reliability is no small thing. But you give yourself away so freely that you have made yourself easy to set down and easier to forget. You are afraid that being needed is the only way you could be loved, and so you are used by many and chosen by almost no one.",
+  "You are warm and disarming, and people open up to you without quite knowing why — a real gift. But you offer kindness mostly when it serves you, and you know it, and the small dishonesty of that quietly eats at you. You want to be a good person and a powerful one at the same time, and you have not yet found the nerve to be both without flinching.",
+  "You are humble enough to ask for help, and that takes a courage most people only pretend to have. But you ask by pleading for mercy when you should be speaking to what the other person stands to gain. You believe that needing help makes you weak, and that shame is exactly why your asking so rarely moves anyone.",
+  "You are perceptive, and you read people more accurately than they would ever guess — that awareness is power in itself. But you wear friendliness like a coat while watching everyone from underneath it, and the distance that creates is lonelier than you let anyone see. You trust no one completely, not even yourself, and you have started calling that wall wisdom.",
+  "You are merciful, and you would rather forgive than fight — there is a real grace in your reluctance to wound. But you leave your conflicts half-finished and let old hurts heal inside the people who caused them, and they always come back stronger. You avoid the discomfort of finishing things, and that single avoidance is quietly unmaking your life.",
+  "You are present and devoted, and the people you love never once doubt that you are there for them. But you are always available, and so you are never longed for, never missed, never quite craved. You confuse constant presence with importance, and you are starving for a desire that your own everywhereness keeps quietly killing.",
+  "You are steady and reliable, the kind of person others can set their lives by — that constancy is a gift in a chaotic world. But you have made yourself so predictable that you are easy to manage and easier to take for granted. You cling to your routines because the unknown frightens you, and that fear is the bars of a cage you built with your own hands.",
+  "You are self-sufficient, and you protect your peace in a way that others secretly envy. But you wall yourself off and call it safety, asking the dark for answers instead of asking a person. You mistake isolation for strength, and the loneliness you keep pretending not to feel is the slow danger eating your best years.",
+  "You are passionate, and you speak your truth with a fire that is genuinely magnetic — people are drawn to your conviction. But you spend that sharpness on the wrong people at the wrong moments, making enemies you never needed to make. You react before you read the room, and your honesty keeps costing you far more than anyone's dishonesty ever could.",
+  "You are devoted, and when you choose something you choose it with your whole self — that wholeheartedness is rare. But you commit too quickly, to plans and to people, and you keep getting trapped by vows you made out of a fear of being alone. You confuse commitment with belonging, and your loyalty has become the very thing others have learned to exploit.",
+  "You are genuinely clever, and your mind moves faster than most of the rooms you sit in. But you need everyone to see that cleverness, even when hiding it would serve you far better, and your pride keeps tipping your hand. You would rather be admired than effective, and that vanity is the soft underbelly of an otherwise sharp and capable mind.",
+  "You are resilient, and you do not give up — that stubbornness has carried you through things that would have ended other people. But you fight hardest at the exact moment you are losing, when bending would buy you everything you actually want. Your pride will not let you yield, and so you break instead, over and over, and call the breaking strength.",
+  "You are curious and capable, drawn to many things because you can genuinely do many things — that range is real. But you scatter yourself so widely that nothing ever receives the full weight of you. You are afraid that choosing one thing means losing all the others, and that fear is why your considerable gifts keep arriving half-finished and unclaimed.",
+  "You are principled, and you hate playing games — that integrity is real and others can feel it. But you bristle against rooms you could simply glide through, mistaking your rigidity for honesty. You are too proud to charm and too stubborn to adapt, and you keep losing, quietly and repeatedly, to people far less able than you.",
+  "You are sincere, and you do not pretend to be what you are not — that refusal to perform is its own kind of dignity. But you let the world tell you who you are and then turn around and ask the world to confirm it. You are waiting for permission to become yourself, and that waiting has become a slow, polite form of surrender.",
+  "You are conscientious, and you take responsibility even for things that were never yours to carry — that reliability runs deep. But you keep doing the unpleasant work that others should be handling, and the stains end up on your hands while they stay spotless. You confuse martyrdom with virtue, and the guilt you carry does more damage to you than any mistake ever could.",
+  "You have faith, and you long for meaning — that yearning is deeply human and nothing to be ashamed of. But you hand your belief to whoever sounds most certain, even, tonight, a cat in the dark. You are afraid to sit with not knowing, and that fear makes you easy to lead, easy to comfort, and easy to fool.",
+  "You are thoughtful, and you weigh things carefully — that caution has saved you from foolish mistakes more than once. But you hesitate at the very edge of every leap, and that hesitation has cost you more than any wrong move ever would have. You keep waiting for a certainty that never arrives, and your caution has quietly grown into cowardice wearing a respectable coat.",
+  "You are a beginner of things, full of energy and fresh starts, and that spark genuinely draws people toward you. But you keep opening doors onto rooms you have not mapped, and your plans collapse somewhere in the middle. You love the thrill of starting far more than the discipline of finishing, and that is why so little of what you begin ever survives you.",
+  "You work hard, and you care — that earnestness is real and people sense it. But you let everyone see the strain, performing your effort as though exhaustion were proof of your worth. You need others to know how much it all costs you, and that need makes you look smaller than the easeful people who quietly win without ever seeming to try.",
+  "You are fair, and you let other people choose — that generosity of spirit is genuine. But you keep playing with cards that others dealt you and calling the loss your fate. You are too passive to shape the game in your favor, and you have learned to mistake your own surrender for open-mindedness.",
+  "You are honest and grounded, and people trust exactly what you tell them — that credibility is hard-won and real. But you keep handing the world dull truth when it is starving for a dream, and so it follows louder, emptier voices instead of you. You think realism is a virtue, but your refusal to inspire is really a quiet fear of being disappointed.",
+  "You are perceptive about people, and you see their soft places more clearly than they would like — that sight is a kind of power. But you keep pushing where they are strongest and wondering why they never move. You aim at the wrong target because the right one feels like manipulation, and that squeamishness is exactly what keeps you powerless.",
+  "You have dignity — a real, buried sense of your own worth that flickers underneath everything you do. But you keep asking the world for permission to feel it, and that asking is woven into every move you make, this question included. You wait for a crown that someone else must place on your head, never seeing that the world only bows to those who already wear their own.",
+  "You are patient in some things and decisive in others, and that range is genuinely a gift. But your timing is always a little wrong — too early out of anxiety, too late out of doubt. You move from your feelings instead of from the moment, and so the world keeps slipping past you while you are busy reacting to the last thing it did.",
+  "You are passionate, and you want things fully, with your whole chest — there is nothing lukewarm about you. But you chase what you cannot have until the wanting owns you, and the chase quietly humiliates you. You cannot let go, and that inability is a leash that anyone who understands it can use to lead you anywhere they please.",
+  "You have real substance — there is depth to you, not just a polished surface — and the people who look closely can tell. But you keep offering plain facts when others need something to see, and so your depth goes unwitnessed. You disdain spectacle as shallow, but your refusal to be seen is really a fear of putting yourself fully on display.",
+  "You are independent-minded, and you think for yourself in a way that is genuinely rare and valuable. But you say every contrary thought aloud, including the many that cost you nothing to keep to yourself. You confuse honesty with broadcasting, and your need to be visibly different keeps locking you out of the very rooms you were built to run.",
+  "You are calm, and you value peace — that steadiness soothes the people lucky enough to be around you. But you wait for still water before you act, and still water is exactly where the fish hide from you. Your aversion to conflict looks like maturity, but it is really how you avoid the churning chaos where your real chances have always lived.",
+  "You are generous, and you know how to appreciate a gift — that keeps your heart open in a closing world. But you reach for what is free and pay for it later in ways you never see coming. You undervalue whatever comes to you easily, including yourself, and that is the precise reason people keep managing to get you cheap.",
+  "You admire excellence, and you learn eagerly from those above you — that humility serves you better than you realize. But you keep trying to fill a shadow far larger than your own, forever measuring yourself against giants. You are so busy comparing that you never leave your own mark, and the imitation is quietly erasing the original you were meant to be.",
+  "You are diplomatic, and you try to win everyone over — that patience with people is a real and tiring virtue. But you fight the whole crowd when you should simply remove the one who leads it, exhausting yourself on every battle but the decisive one. You scatter your force out of a wish to be liked by all, and so, in the end, you defeat no one.",
+  "You are direct, and you do not manipulate — that straightness is honorable and others feel safe in it. But you keep demanding with a half-closed fist what you could so easily win with an open hand. You reach for control before connection, and people obey you grudgingly when they could have followed you gladly to the ends of the earth.",
+  "You are responsive in a feeling, human way — you are not cold, and people warm to that. But you react in exactly the manner expected of you, every single time, and that predictability hands the controls straight to anyone watching. You wear your responses plainly on your face, and anyone patient enough can play you like a familiar instrument.",
+  "You are visionary, and you want the world to be better — that idealism is rare and genuinely good. But you demand sweeping change all at once and frighten everyone into digging in against you. You have no patience for the slow turning of the wheel, and your impatience keeps strangling the very futures you can so clearly imagine.",
+  "You hold yourself to a high standard, and that self-discipline is genuinely admirable. But you strain to appear flawless, and flawlessness breeds only envy and distance in the people around you. You armor yourself so completely that no one can get near, and the perfection you chase is really just a fear of being seen exactly as you are.",
+  "You are ambitious and driven, and that hunger has carried you to places other people only talk about. But you win and then keep grasping past the win until it sours in your hands. You do not know how to stop, because stopping feels too much like dying, and that not-knowing keeps turning your hard-won victories into losses.",
+  "You are loyal to your plans, and you value certainty — that steadiness is a genuine strength in a chaotic world. But you cling to fixed shapes that the world keeps quietly dissolving, and your need for a hard yes or no is that very grip made visible. You fear formlessness because it feels like losing yourself, when it is the one thing that could finally set you free.",
 ];
 
 const fade = {
@@ -194,6 +203,7 @@ export function ResultScreen({
   const word = categories[hsh % categories.length];
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
   const reading = lawReadings[hsh % lawReadings.length];
+  const catIntro = catIntros[(hsh >> 9) % catIntros.length];
 
   return (
     <motion.div
@@ -281,20 +291,11 @@ export function ResultScreen({
           animate="show"
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
-          <p>The Cat Cloud answered with three ripples.</p>
-          <p>
-            They move outward through the dark, carrying small tremors that pass
-            over fur and floor and the long quiet of the room. Cats, like us,
-            keep their fears close. They freeze at a sound that may be nothing,
-            or melt into stillness when something unseen shifts nearby — instinct
-            bending what is real into what might be.
+          <p>{catIntro}</p>
+          <p className="pt-2 text-white/95">
+            Well — the question you asked says a lot about you.
           </p>
           <p>{reading}</p>
-          <p className="text-white/50">
-            What we ask of another creature often says more about us than about
-            them — the shape of our wondering, drawn long before any answer
-            arrives.
-          </p>
         </motion.div>
 
         <motion.div
