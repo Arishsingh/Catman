@@ -42,22 +42,6 @@ const catIntros = [
   "The cat watched the three ripples spread and did not flinch, because it has seen the dark do stranger things and keep its secrets. It understands the language of small disturbances — a twitch, a hush, a question asked too carefully. Yours told it more than you meant it to.",
 ];
 
-// A "the cat knows that..." line, appended to the intro in the same paragraph.
-const catKnows = [
-  "The cat knows that you already have your answer, and that you came here hoping to be talked out of it.",
-  "The cat knows that the question you typed is not the real question, and that the real one frightens you.",
-  "The cat knows what you are afraid of, even though you were careful never to say it.",
-  "The cat knows that you have asked this same thing, in other words, to other people, and ignored them all.",
-  "The cat knows the answer changes nothing, because you have already decided how this ends.",
-  "The cat knows you will read what comes next, recognize yourself in it, and pretend you didn't.",
-  "The cat knows that you are not really asking about the thing you asked about.",
-  "The cat knows there is someone you wish you had asked instead, and why you couldn't.",
-  "The cat knows you have been circling this for longer than you would ever admit out loud.",
-  "The cat knows that the part of you that asked is not the part of you that will listen.",
-  "The cat knows exactly which sentence below is going to sting, and it chose this reading on purpose.",
-  "The cat knows you came for comfort and will leave with something closer to a mirror.",
-];
-
 // All 48 Laws of Power, each rewritten as a long personal reading: first the
 // good the cat sees in you, then the lack it cannot help but name. One is chosen
 // by the question's hash, so it stays consistent per question.
@@ -232,7 +216,6 @@ export function ResultScreen({
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
   const reading = lawReadings[hsh % lawReadings.length];
   const catIntro = catIntros[(hsh >> 9) % catIntros.length];
-  const catKnow = catKnows[(hsh >> 6) % catKnows.length];
 
   return (
     <motion.div
@@ -320,7 +303,7 @@ export function ResultScreen({
           animate="show"
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
-          <p>{catIntro} {catKnow}</p>
+          <p>{catIntro}</p>
           <p className="pt-2 text-white/95">
             Well — the question you asked says a lot about you.
           </p>
