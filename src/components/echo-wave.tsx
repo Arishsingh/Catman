@@ -3,14 +3,8 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const MAX_RIPPLES = 10; // how many overlapping ripples can coexist
+const MAX_RIPPLES = 10;
 
-/**
- * WebGL "echolocation" ripple driven by falling drops in water.
- * Drops fall one after another and keep looping smoothly — each impact spawns
- * a ripple that overlaps and decays naturally alongside the others (no cut-off).
- * After the configured number of drops, `onComplete` fires.
- */
 export function EchoWave({
   className,
   drops = 3,
@@ -41,7 +35,6 @@ export function EchoWave({
     renderer.setSize(w, h);
     container.appendChild(renderer.domElement);
 
-    // ---- grid of points on the XZ plane ----
     const SIZE = 64;
     const SEG = 220;
     const count = SEG * SEG;
@@ -57,21 +50,19 @@ export function EchoWave({
     const geom = new THREE.BufferGeometry();
     geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
-    // ring buffer of impact times shared with the shader
     const impacts: number[] = new Array(MAX_RIPPLES).fill(-100);
-    // matching ring buffer of impact centers (where each drop landed)
+
     const centers: THREE.Vector2[] = Array.from(
       { length: MAX_RIPPLES },
       () => new THREE.Vector2(0, 0)
     );
 
-    // stable pseudo-random landing spot for a given drop cycle
     const centerFor = (cyc: number): [number, number] => {
       const a = Math.sin(cyc * 12.9898) * 43758.5453;
       const b = Math.sin(cyc * 78.233) * 43758.5453;
       const rx = a - Math.floor(a);
       const rz = b - Math.floor(b);
-      const radius = 11.0; // scatter radius across the water surface
+      const radius = 11.0;
       const ang = rx * Math.PI * 2;
       const dist = Math.sqrt(rz) * radius;
       return [Math.cos(ang) * dist, Math.sin(ang) * dist];
@@ -87,7 +78,7 @@ export function EchoWave({
         uSize: { value: 130 * Math.min(window.devicePixelRatio, 2) },
         uAmp: { value: 6.5 },
       },
-      vertexShader: /* glsl */ `
+      vertexShader:  `
         #define MAX ${MAX_RIPPLES}
         uniform float uTime;
         uniform float uImpacts[MAX];
@@ -140,7 +131,7 @@ export function EchoWave({
           gl_PointSize = uSize * (0.4 + crest * 1.1) / -mv.z;
         }
       `,
-      fragmentShader: /* glsl */ `
+      fragmentShader:  `
         varying float vB;
         void main() {
           vec2 c = gl_PointCoord - 0.5;
@@ -152,7 +143,6 @@ export function EchoWave({
     const points = new THREE.Points(geom, material);
     scene.add(points);
 
-    // ---- falling drop (soft glow sprite) ----
     const glowCanvas = document.createElement("canvas");
     glowCanvas.width = glowCanvas.height = 64;
     const gctx = glowCanvas.getContext("2d");
@@ -185,16 +175,15 @@ export function EchoWave({
     };
     window.addEventListener("resize", onResize);
 
-    // ---- drop timing ----
-    const t0 = 0.4; // first drop delay
-    const fallDur = 0.8; // fall time
-    const period = 1.7; // time between drops
-    const settle = 2.4; // calm time after the configured drops
+    const t0 = 0.4;
+    const fallDur = 0.8;
+    const period = 1.7;
+    const settle = 2.4;
     const fallTop = 18;
     const N = Math.max(1, drops);
     const lastImpact = t0 + (N - 1) * period + fallDur;
 
-    let recorded = -1; // last cycle whose impact was logged
+    let recorded = -1;
     let writePtr = 0;
     let completed = false;
     const start = performance.now();
@@ -206,21 +195,20 @@ export function EchoWave({
 
       drop.visible = false;
       if (t >= t0) {
-        const cyc = Math.floor((t - t0) / period); // keeps counting -> loops forever
+        const cyc = Math.floor((t - t0) / period);
         const cycleStart = t0 + cyc * period;
         const localT = t - cycleStart;
 
-        const [cx, cz] = centerFor(cyc); // this drop's landing spot
+        const [cx, cz] = centerFor(cyc);
 
         if (localT < fallDur) {
-          // drop is falling toward its (scattered) landing spot
+
           const f = localT / fallDur;
           drop.visible = true;
           drop.position.set(cx, fallTop * (1 - f * f), cz);
           dropMat.opacity = Math.min(1, f * 2.2);
         }
 
-        // log the impact once, when this drop lands
         if (localT >= fallDur && cyc > recorded) {
           recorded = cyc;
           const slot = writePtr % MAX_RIPPLES;

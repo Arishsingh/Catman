@@ -3,12 +3,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-/**
- * Ambient "Cat Cloud" — a slowly drifting 3D point cloud rendered behind the
- * input screen. White additive points on black, matching the EchoWave look.
- * The whole cloud turns gently and parallaxes toward the cursor so the empty
- * input phase gains depth without competing with the text.
- */
 export function CatCloudScene({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -29,17 +23,16 @@ export function CatCloudScene({ className }: { className?: string }) {
     renderer.setSize(w, h);
     container.appendChild(renderer.domElement);
 
-    // ---- particles distributed through a soft ellipsoid "cloud" ----
     const COUNT = 2600;
     const positions = new Float32Array(COUNT * 3);
-    const seeds = new Float32Array(COUNT); // per-point phase for twinkle
+    const seeds = new Float32Array(COUNT);
     for (let i = 0; i < COUNT; i++) {
-      // sample inside a sphere, biased toward the center for a cloudy core
+
       const u = Math.random();
       const r = Math.cbrt(u) * 16 * (0.55 + 0.45 * Math.random());
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta) * 1.35; // wider than tall
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta) * 1.35;
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.8;
       positions[i * 3 + 2] = r * Math.cos(phi);
       seeds[i] = Math.random() * Math.PI * 2;
@@ -57,7 +50,7 @@ export function CatCloudScene({ className }: { className?: string }) {
         uTime: { value: 0 },
         uSize: { value: 26 * Math.min(window.devicePixelRatio, 2) },
       },
-      vertexShader: /* glsl */ `
+      vertexShader:  `
         uniform float uTime;
         uniform float uSize;
         attribute float aSeed;
@@ -77,7 +70,7 @@ export function CatCloudScene({ className }: { className?: string }) {
           gl_PointSize = uSize / -mv.z;
         }
       `,
-      fragmentShader: /* glsl */ `
+      fragmentShader:  `
         varying float vTw;
         void main() {
           vec2 c = gl_PointCoord - 0.5;
@@ -92,7 +85,6 @@ export function CatCloudScene({ className }: { className?: string }) {
     const points = new THREE.Points(geom, material);
     scene.add(points);
 
-    // ---- cursor parallax (eased) ----
     const pointer = { x: 0, y: 0 };
     const target = { x: 0, y: 0 };
     const onPointerMove = (e: PointerEvent) => {
@@ -119,7 +111,6 @@ export function CatCloudScene({ className }: { className?: string }) {
       pointer.x += (target.x - pointer.x) * 0.04;
       pointer.y += (target.y - pointer.y) * 0.04;
 
-      // slow ambient turn + cursor parallax
       points.rotation.y = t * 0.06 + pointer.x * 0.4;
       points.rotation.x = pointer.y * 0.25;
 

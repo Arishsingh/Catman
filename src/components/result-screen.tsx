@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
-// category words (radial labels + result word), generic single terms
 const categories = [
   "FEAR",
   "AROUSAL",
@@ -16,8 +15,6 @@ const categories = [
 const ringText =
   "CAT LANGUAGE MAP • ECHOLOCATION • ATTRACTION • ATTENTION • SOLICITATION • TERRITORY • AROUSAL • FEAR • ";
 
-// Fixed, mysterious passage for each category word — the "lore" half of the
-// reading, kept consistent per category (in the spirit of batcloud.art).
 const categoryLore: Record<string, { body: string; close: string }> = {
   FEAR: {
     body: "They move outward through the dark, carrying faint tremors that pass over fur and floor and the long quiet of the room. Cats, like us, know fear. They freeze at a sound that may be nothing, or melt into stillness when they sense a threat hiding in the shadows. In rooms shaped by night and instinct, anxiety can bend perception — part instinct, part distortion, amplifying what may not be here, or may not be now.",
@@ -60,9 +57,6 @@ const numberWords = [
   "five", "six", "seven", "eight", "nine",
 ];
 
-// All 48 Laws of Power, each rewritten as a long personal reading: first the
-// good the cat sees in you, then the lack it cannot help but name. One is chosen
-// by the question's hash, so it stays consistent per question.
 const lawReadings = [
   "You dim yourself around everyone you admire and call it humility, but it is just fear wearing a polite face. You have trained the whole world to expect your shadow and never your light, and it learned the lesson well — no one waits for you to shine anymore. You are forgettable on purpose, and the worst part is how successfully it has worked.",
   "You keep handing your warmth to people who showed you exactly who they were years ago, because being alone frightens you more than being used. You are too soft to be respected and too desperate to notice the difference. They keep you close for one reason: you never make them earn a thing.",
@@ -123,7 +117,6 @@ const fade = {
   }),
 };
 
-/** small crosshair "+" mark */
 function Cross({ className }: { className: string }) {
   return (
     <span className={`pointer-events-none absolute text-white/40 ${className}`}>
@@ -134,7 +127,6 @@ function Cross({ className }: { className: string }) {
   );
 }
 
-/** original symmetric "language" glyph (not the brand's mark) */
 function Glyph() {
   return (
     <svg width="120" height="120" viewBox="0 0 200 200" className="fill-white">
@@ -149,7 +141,6 @@ function Glyph() {
   );
 }
 
-/** faint twinkling particle "map" cluster behind the reading */
 function MapCluster() {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -244,10 +235,8 @@ export function ResultScreen({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.9, ease: "easeInOut" }}
     >
-      {/* particle map cluster */}
       <MapCluster />
 
-      {/* rotating circular "map" labels */}
       <motion.svg
         viewBox="0 0 500 500"
         aria-hidden
@@ -266,7 +255,6 @@ export function ResultScreen({
         </text>
       </motion.svg>
 
-      {/* faint radial glow */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 opacity-40"
@@ -276,7 +264,6 @@ export function ResultScreen({
         }}
       />
 
-      {/* reading panel with corner crosshairs + side rules */}
       <div className="relative mx-auto flex min-h-svh max-w-2xl flex-col px-8 py-24">
         <span className="pointer-events-none absolute inset-y-12 left-0 w-px bg-white/15" />
         <span className="pointer-events-none absolute inset-y-12 right-0 w-px bg-white/15" />

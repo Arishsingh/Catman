@@ -8,7 +8,6 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-// body / instructions font — exact match to batcloud.art
 const dmMono = DM_Mono({
   variable: "--font-dm-mono",
   subsets: ["latin"],

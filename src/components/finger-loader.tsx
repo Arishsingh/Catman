@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 
-/**
- * Full-screen "drumming fingers" loader.
- * Four fingers tap on a surface in sequence (impatient drumming) with a
- * LOADING caption below, then the panel fades to reveal the page.
- */
 export function FingerLoader({ duration = 3000 }: { duration?: number }) {
   const [done, setDone] = useState(false);
   const lenis = useLenis();
@@ -35,9 +30,8 @@ export function FingerLoader({ duration = 3000 }: { duration?: number }) {
   );
 }
 
-/** Inline-able drumming hand — drop this anywhere you need the spinner. */
 export function DrummingHand({ size = 180 }: { size?: number }) {
-  // four fingers, left-to-right; each taps with a staggered phase
+
   const fingers = [
     { x: 38, h: 132 },
     { x: 74, h: 140 },
@@ -47,9 +41,9 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
 
   const fingerWidth = 30;
   const topY = 26;
-  const step = 0.14; // delay between fingers
-  const tap = 0.42; // tap duration
-  const period = fingers.length * step + 0.28; // full drum cycle
+  const step = 0.14;
+  const tap = 0.42;
+  const period = fingers.length * step + 0.28;
 
   return (
     <svg
@@ -59,7 +53,6 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* ground shadow */}
       <motion.ellipse
         cx="110"
         cy="158"
@@ -71,7 +64,6 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
         transition={{ duration: period, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* back of the hand connecting the knuckles */}
       <rect
         x="30"
         y={topY - 4}
@@ -83,7 +75,6 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
         strokeWidth="5"
       />
 
-      {/* thumb resting to the right */}
       <g transform="rotate(28 182 96)">
         <rect
           x="170"
@@ -98,7 +89,6 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
         <rect x="178" y="84" width="34" height="8" rx="4" fill="#f3a866" />
       </g>
 
-      {/* fingers — each pivots at its knuckle (top) and taps */}
       {fingers.map((f, i) => (
         <motion.g
           key={i}
@@ -122,7 +112,6 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
             stroke="#5a3417"
             strokeWidth="5"
           />
-          {/* highlight */}
           <rect
             x={f.x + 6}
             y={topY + 12}

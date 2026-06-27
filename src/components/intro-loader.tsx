@@ -10,11 +10,6 @@ import {
 } from "motion/react";
 import { useLenis } from "lenis/react";
 
-/**
- * Full-screen black intro loader: a counter ticks 0 -> 100 with a progress
- * line, then the whole panel slides up to reveal the page. Scroll is locked
- * (via Lenis) until the intro finishes.
- */
 export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
   const [done, setDone] = useState(false);
   const lenis = useLenis();
@@ -29,7 +24,7 @@ export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
       duration,
       ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
-        // brief beat at 100 before revealing
+
         setTimeout(() => setDone(true), 250);
       },
     });
@@ -44,7 +39,6 @@ export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
           exit={{ y: "-100%" }}
           transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
         >
-          {/* big counter */}
           <motion.span
             className="font-mono text-[18vw] leading-none tracking-tighter sm:text-[12vw]"
             exit={{ opacity: 0, y: -40 }}
@@ -53,7 +47,6 @@ export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
             <motion.span>{rounded}</motion.span>
           </motion.span>
 
-          {/* progress line */}
           <div className="mt-8 h-px w-[60vw] max-w-md overflow-hidden bg-white/20">
             <motion.div className="h-full bg-white" style={{ width }} />
           </div>

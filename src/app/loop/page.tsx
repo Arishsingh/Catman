@@ -2,14 +2,11 @@
 
 import { EchoCinematic } from "@/components/echo-cinematic";
 
-/** Cinematic 20s echolocation sequence: question -> glitch -> ripple -> drop. */
 export default function LoopPage() {
   return (
     <main className="relative h-svh w-full overflow-hidden bg-black text-white">
-      {/* particle field (phased timeline lives in the component) */}
       <EchoCinematic className="absolute inset-0" />
 
-      {/* vignette */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -19,16 +16,13 @@ export default function LoopPage() {
         }}
       />
 
-      {/* HUD (flicker on the whole layer) */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{ animation: "echoFlicker 4s steps(1, end) infinite" }}
       >
-        {/* corner labels */}
         <div className="absolute left-8 top-7 font-['Share_Tech'] text-[11px] uppercase tracking-[0.4em] text-white/70">
           Bat Cloud
         </div>
-        {/* tiny menu icon top-right */}
         <div className="absolute right-8 top-8 flex flex-col gap-[3px]">
           <span className="block h-px w-5 bg-white/60" />
           <span className="block h-px w-5 bg-white/60" />
@@ -41,7 +35,6 @@ export default function LoopPage() {
           SONAR / 04
         </div>
 
-        {/* faint rotating tick ring */}
         <svg
           viewBox="0 0 400 400"
           aria-hidden
@@ -67,18 +60,15 @@ export default function LoopPage() {
           })}
         </svg>
 
-        {/* scanner sweep */}
         <div
           className="absolute left-1/2 top-1/2 h-px w-[72vmin] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent"
           style={{ animation: "echoScan 8s ease-in-out infinite" }}
         />
 
-        {/* ---- centered question block (0-5s of the loop) ---- */}
         <div
           className="absolute left-1/2 top-[34%] w-[min(90vw,760px)] -translate-x-1/2 -translate-y-1/2 text-center"
           style={{ animation: "cineQuestion 20s ease-in-out infinite, cineGlitch 20s linear infinite" }}
         >
-          {/* inner layer carries the subtle loading shimmer */}
           <div style={{ animation: "cineTextFlicker 3.4s ease-in-out infinite" }}>
             <h1 className="font-['Share_Tech'] text-2xl font-bold uppercase leading-[1.4] tracking-[0.2em] [word-spacing:0.3em] sm:text-4xl">
               If you could<span className="-ml-[0.12em]">,</span>
@@ -86,10 +76,8 @@ export default function LoopPage() {
               what would you ask a bat?
             </h1>
 
-            {/* thin divider line */}
             <div className="mx-auto mt-10 h-px w-[70%] bg-white/60" />
 
-            {/* input prompt: tiny microcopy + blinking cursor */}
             <div className="mt-6 flex items-center justify-center gap-1 font-mono text-[11px] tracking-wide text-white/55">
               <span>Type a question that can be answered by YES or NO.</span>
               <span
@@ -101,7 +89,6 @@ export default function LoopPage() {
         </div>
       </div>
 
-      {/* film grain */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-screen"

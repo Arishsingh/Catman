@@ -3,16 +3,8 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const LOOP = 20; // seconds
+const LOOP = 20;
 
-/**
- * Cinematic echolocation sequence (loops every 20s):
- *  0-5s  field hidden (question screen handled by HUD)
- *  5-7s  tiny cluster expands into a flat elliptical ripple ring
- *  7-13s grows into a large particle dome with a travelling sonar wave
- *  13-20 a bright drop hits and a shockwave ripple slides across, surface breathes
- * Slow cinematic push-in throughout.
- */
 export function EchoCinematic({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,7 +25,6 @@ export function EchoCinematic({ className }: { className?: string }) {
     renderer.setSize(w, h);
     container.appendChild(renderer.domElement);
 
-    // ---- particle grid ----
     const SIZE = 80;
     const SEG = 210;
     const count = SEG * SEG;
@@ -60,7 +51,7 @@ export function EchoCinematic({ className }: { className?: string }) {
         uImpact: { value: -100 },
         uSize: { value: 120 * Math.min(window.devicePixelRatio, 2) },
       },
-      vertexShader: /* glsl */ `
+      vertexShader:  `
         uniform float uTime;
         uniform float uGrow;
         uniform float uFade;
@@ -103,7 +94,7 @@ export function EchoCinematic({ className }: { className?: string }) {
           gl_PointSize = uSize * (0.35 + crest * 1.0) / -mv.z;
         }
       `,
-      fragmentShader: /* glsl */ `
+      fragmentShader:  `
         varying float vB;
         void main() {
           vec2 c = gl_PointCoord - 0.5;
@@ -117,7 +108,6 @@ export function EchoCinematic({ className }: { className?: string }) {
     const points = new THREE.Points(geom, material);
     scene.add(points);
 
-    // ---- bright drop (soft glow sprite) ----
     const gc = document.createElement("canvas");
     gc.width = gc.height = 64;
     const gx = gc.getContext("2d");
@@ -156,22 +146,19 @@ export function EchoCinematic({ className }: { className?: string }) {
       const T = (performance.now() / 1000) % LOOP;
       material.uniforms.uTime.value = T;
 
-      // soft fade-in once the text has dissolved (~5.2s), gentle fade-out near loop end
       let fade = 1;
       if (T < 5.2) fade = 0;
       else if (T < 6.4) fade = (T - 5.2) / 1.2;
       else if (T > 19) fade = 1 - (T - 19);
       material.uniforms.uFade.value = Math.max(0, fade);
 
-      // seed glows first, then slowly expands into the full field
       let grow = 0;
       if (T >= 5.2) {
-        const lin = Math.min(1, (T - 5.2) / 6.0); // 5.2s -> 11.2s
-        grow = Math.max(0.05, Math.pow(lin, 1.7)); // slow seed start, then expand
+        const lin = Math.min(1, (T - 5.2) / 6.0);
+        grow = Math.max(0.05, Math.pow(lin, 1.7));
       }
       material.uniforms.uGrow.value = grow;
 
-      // drop + shockwave at ~13s
       const dropStart = 12.2;
       const dropDur = 0.8;
       if (T >= dropStart && T < dropStart + dropDur) {
@@ -188,7 +175,6 @@ export function EchoCinematic({ className }: { className?: string }) {
         material.uniforms.uImpact.value = -100;
       }
 
-      // slow cinematic push-in + gentle rotation
       const k = Math.min(1, Math.max(0, (T - 5) / 15));
       camera.position.z = 40 - 12 * k;
       camera.position.x = Math.sin(T * 0.15) * 2.5;

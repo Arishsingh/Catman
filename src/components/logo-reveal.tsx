@@ -4,30 +4,21 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 
-/**
- * Logo intro: a white logo-shaped mask grows in from a small seed, holds,
- * then the overlay fades to reveal the page. Scroll (Lenis) is locked until
- * the intro completes.
- *
- * Artwork comes from `public/logo.svg`. Replace that file with your own logo
- * (opaque shapes on a transparent background — the mask uses the alpha, so the
- * fill colour inside the SVG doesn't matter).
- */
 export function LogoReveal({
   src = "/logo.svg",
   cycles = 4,
   hold = 600,
 }: {
   src?: string;
-  /** how many times the grow-in animation plays before revealing the page */
+
   cycles?: number;
-  /** how long the logo stays on screen after the last cycle, in ms */
+
   hold?: number;
 }) {
   const [done, setDone] = useState(false);
   const lenis = useLenis();
 
-  const growIn = 700; // ms for one grow-in cycle
+  const growIn = 700;
 
   useEffect(() => {
     lenis?.stop();

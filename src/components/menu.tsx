@@ -6,14 +6,12 @@ import { useLenis } from "lenis/react";
 
 const items = ["Home"];
 
-// smooth easing for the bars morph
 const morph = { duration: 0.4, ease: [0.45, 0, 0.2, 1] as const };
 
 export function Menu() {
   const [open, setOpen] = useState(false);
   const lenis = useLenis();
 
-  // lock smooth scroll while the menu is open
   useEffect(() => {
     if (open) lenis?.stop();
     else lenis?.start();
@@ -23,7 +21,6 @@ export function Menu() {
 
   return (
     <>
-      {/* hamburger <-> X morphing button (stays above the overlay) */}
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close menu" : "Open menu"}
@@ -58,7 +55,6 @@ export function Menu() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {/* nav items, right-aligned, staggered in from the right */}
             <nav className="flex h-full flex-col items-end gap-3 px-5 pt-28 sm:px-9">
               {items.map((label, i) => (
                 <motion.a

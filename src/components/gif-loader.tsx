@@ -4,16 +4,12 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 
-/**
- * Full-screen GIF loader. Shows `public/loader.gif` centered on black, then
- * fades out to reveal the page. Scroll (Lenis) is locked until it finishes.
- */
 export function GifLoader({
   src = "/loader.gif",
   duration = 3200,
 }: {
   src?: string;
-  /** how long the loader stays before fading, in ms */
+
   duration?: number;
 }) {
   const [done, setDone] = useState(false);
@@ -35,7 +31,6 @@ export function GifLoader({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt="Loading"

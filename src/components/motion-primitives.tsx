@@ -1,17 +1,11 @@
 "use client";
 
-/**
- * Small set of reusable Motion building blocks.
- * Import these in client components to animate content with sensible defaults.
- */
-
 import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-/** Parent that staggers its animated children into view. */
 export function StaggerContainer({
   children,
   className,
@@ -41,7 +35,6 @@ export function StaggerContainer({
   );
 }
 
-/** A single item that fades and slides up — pairs with StaggerContainer. */
 export function FadeIn({
   children,
   className,
@@ -67,7 +60,6 @@ export function FadeIn({
   );
 }
 
-/** Hover/tap spring wrapper for interactive cards and buttons. */
 export function HoverLift({
   children,
   className,

@@ -9,20 +9,16 @@ import { EchoWave } from "@/components/echo-wave";
 import { CatCloudScene } from "@/components/cat-cloud-scene";
 import { ResultScreen } from "@/components/result-screen";
 
-// content fades in just as the loader finishes
 const REVEAL_DELAY = 3.3;
 
 type Phase = "input" | "wave" | "result";
 
-// same hash the result screen uses, so the card number and the ripple
-// count are always derived from the question in lockstep.
 function hash(s: string) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
   return h;
 }
 
-/** synthesized "sonar" echo — three decaying pings, no audio file needed */
 function playSonar() {
   try {
     const Ctx =
@@ -46,7 +42,7 @@ function playSonar() {
     });
     setTimeout(() => ctx.close(), 3000);
   } catch {
-    /* audio not available — ignore */
+
   }
 }
 
@@ -54,11 +50,8 @@ export default function Home() {
   const [question, setQuestion] = useState("");
   const [phase, setPhase] = useState<Phase>("input");
 
-  // the card number (1..9) decides how many ripples the answer has
   const drops = (hash(question || "the cat cloud") % 9) + 1;
 
-  // safety fallback in case the ripple's onComplete never fires —
-  // scaled to the drop count so longer sequences are not cut short
   useEffect(() => {
     if (phase !== "wave") return;
     const expectedMs = (0.4 + (drops - 1) * 1.7 + 0.8 + 2.4 + 2) * 1000;
@@ -74,7 +67,7 @@ export default function Home() {
   };
 
   const restart = () => {
-    // return to home within 2 seconds of pressing Restart
+
     setTimeout(() => {
       setQuestion("");
       setPhase("input");
@@ -85,7 +78,6 @@ export default function Home() {
     <div className="app-wrapper relative min-h-svh bg-black text-white">
       <GifLoader />
 
-      {/* header (stays above the experience) */}
       <motion.header
         className="fixed left-0 top-0 z-[60] flex w-full items-center justify-between px-6 pt-10 pb-6 sm:px-12 sm:pt-16 sm:pb-8"
         initial={{ opacity: 0 }}
@@ -98,7 +90,6 @@ export default function Home() {
         <Menu />
       </motion.header>
 
-      {/* ambient 3D cloud behind the input phase */}
       <AnimatePresence>
         {phase === "input" && (
           <motion.div
@@ -114,7 +105,6 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* INPUT phase */}
       <AnimatePresence>
         {phase === "input" && (
           <motion.main
@@ -145,7 +135,6 @@ export default function Home() {
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              {/* question input — the underline */}
               <input
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -154,7 +143,6 @@ export default function Home() {
                 className="w-full border-b border-white/70 bg-transparent pb-4 text-center font-mono text-xl caret-white outline-none focus:border-white"
               />
 
-              {/* instructions */}
               <div className="mt-10 space-y-6 text-center font-mono text-lg leading-relaxed text-white">
                 <p>Type a question that can be answered by YES or NO.</p>
                 <p className="mx-auto max-w-5xl text-white/90">
@@ -168,7 +156,6 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* language toggle (input only) */}
       <AnimatePresence>
         {phase === "input" && (
           <motion.button
@@ -184,7 +171,6 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* EXPERIENCE: black wash -> ripple -> result */}
       <AnimatePresence>
         {phase === "wave" && (
           <motion.div
