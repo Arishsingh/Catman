@@ -16,59 +16,48 @@ const categories = [
 const ringText =
   "CAT LANGUAGE MAP • ECHOLOCATION • ATTRACTION • ATTENTION • SOLICITATION • TERRITORY • AROUSAL • FEAR • ";
 
+// Fixed, mysterious passage for each category word — the "lore" half of the
+// reading, kept consistent per category (in the spirit of batcloud.art).
+const categoryLore: Record<string, { body: string; close: string }> = {
+  FEAR: {
+    body: "They move outward through the dark, carrying faint tremors that pass over fur and floor and the long quiet of the room. Cats, like us, know fear. They freeze at a sound that may be nothing, or melt into stillness when they sense a threat hiding in the shadows. In rooms shaped by night and instinct, anxiety can bend perception — part instinct, part distortion, amplifying what may not be here, or may not be now.",
+    close: "Our fears speak as much about us as about the world. They shape what we expect long before anything arrives.",
+  },
+  AROUSAL: {
+    body: "They ripple out like a held breath finally let go, a quickening that travels through whisker and spine. A cat in arousal is all coiled attention — pupils wide, body low, every sense pulled taut toward a single point in the dark. It is the moment before the pounce, when the whole animal becomes a question aimed at one answer.",
+    close: "What stirs us reveals what we want. Arousal is desire with the mask briefly off, telling the truth before we can dress it up.",
+  },
+  TERRITORY: {
+    body: "They spread to the edges of the known and stop, marking a boundary only the cat can see. A cat maps its world in scent and shadow, claiming corners, doorways, the warm square of light by the window. What it guards, it guards completely; what lies beyond the line, it watches with one half-closed eye.",
+    close: "What we defend says what we fear to lose. Territory is love and anxiety wearing the same fur.",
+  },
+  SOLICITATION: {
+    body: "They reach outward in soft, deliberate waves, a quiet asking dressed as indifference. A cat solicits without ever seeming to need — the slow blink, the brush against a leg, the sound pitched just for human ears. It has learned that the surest way to be given to is to appear not to want.",
+    close: "How we ask reveals how we love. Solicitation is the wanting we hide inside a gesture, hoping to be read.",
+  },
+  ATTENTION: {
+    body: "They move out in measured rings, each one a small demand to be noticed. A cat decides where attention goes and withholds its own like currency, granting a glance, a presence, a weight in your lap only when it chooses. To be watched by a cat is to be chosen; to be ignored is its own quiet verdict.",
+    close: "What we give attention to becomes our life. The cat spends its gaze carefully — we rarely do.",
+  },
+  ATTRACTION: {
+    body: "They pull inward as much as out, a current drawing things toward a center. A cat is drawn by warmth, by motion, by the half-seen thing that will not hold still — and it draws others the same way, by being just out of reach. Attraction, for a cat, is a kind of gravity it never has to explain.",
+    close: "What pulls at us shows what we are missing. Attraction is the shape of an absence, reaching for its fit.",
+  },
+  ECHOLOCATION: {
+    body: "They travel out into the dark and come back changed, carrying the shape of everything they touched. A cat reads the room in ways you cannot — the tremor underfoot, the shift of air, the sound beneath the sound. It builds a map of the unseen and moves through it without doubt, certain of a world you can only guess at.",
+    close: "We, too, send questions into the dark and listen for what returns. The answer is always partly the shape of the asking.",
+  },
+};
+
 function hash(s: string) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
   return h;
 }
 
-// What the cat is doing in the dark — varied by hash, sets a mysterious tone.
-const catIntros = [
-  "The cat does not answer the way you want it to. It watches, it waits, it gives affection on its own terms and attention only when it decides you have earned it — never because it was asked. That is the first thing to understand about the creature you came to.",
-  "The cat owes you nothing and pretends nothing. It takes the one patch of sun, ignores your calling, and comes close only when it has judged you worth the closeness. It is the most honest thing in this dark room, and it has just looked straight through you.",
-  "A cat keeps its fears close and its intentions closer. It freezes at a sound that may be nothing, melts into stillness when the unseen shifts, and lets you guess at all of it. It survives by being unreadable — and it has been reading you this whole time.",
-  "The cat answered with three ripples through the dark, the way it answers everything: without hurry, without explanation, and without the smallest need for your approval. It moves through the world owing no one a reason, and it wonders why you cannot.",
-  "Somewhere in the black the cat is sitting perfectly still, its eyes two coins of reflected nothing, watching a thing in the corner that you will never see. It blinked once, slowly, which in its language is the closest it comes to mercy. Then it turned its attention, at last, to you.",
-  "The cat has walked through nine rooms tonight that do not exist on any floor plan, and it returned smelling of cold air and old secrets. It will not tell you where it went. It never does — it only carries the dark back in its fur and lets a little of it fall on whoever asked.",
-  "A cat will stare at an empty doorway for an hour, certain something is there, and it is almost always right. It lives half in this room and half in the one just behind it, the one you can only feel on the back of your neck. Tonight it stepped briefly into your half to deliver this.",
-  "The cat purrs not because it is happy but because it has decided to, the way it decides everything — quietly, completely, and without telling you why. The sound is a door closing somewhere you cannot follow. Behind it, the cat is already thinking about your question.",
-  "It arrived without a sound, the way cats always do, as if the floor had agreed not to mention it. It has been in the room far longer than you realized, folded into a shadow, listening. The thing about a cat is that by the time you notice it, it has already finished deciding about you.",
-  "The cat hunts things that make no noise and leaves no trace, and it catches them anyway. It brought one back tonight and set it, invisible, at your feet — a gift, or a warning, in the way only a cat can mean both at once. You will not know which until much later.",
-  "A cat sleeps three-quarters of its life and somehow misses nothing. Even now, with its eyes half-closed and its breathing slow, it has counted every fear you walked in with. It is not resting. It is simply waiting for you to stop pretending you came here for a yes or a no.",
-  "The cat turned its head toward a sound only it could hear, held that pose for a long, weightless moment, and then looked back at you as though you had been the sound all along. It knows things it did not learn. It has been somewhere you have not, and it came back with your answer.",
-  "Out in the dark the cat moves like spilled ink finding the cracks, pouring itself into spaces that should be too small, vanishing and reappearing a room away. Nothing holds it and nothing surprises it. It paused its endless circuit of the night only to consider what you asked.",
-  "The cat keeps one ear turned to the world you can see and one turned to the one you cannot, and it trusts the second far more than the first. It heard your question arrive in both at once. What it tells you now comes from the side of the dark you are not allowed to enter.",
-  "A cat does not chase what it wants; it waits until the want comes to it, and it always does. It has been sitting in this stillness so long that the room has begun to arrange itself around its patience. Your question disturbed that stillness for exactly as long as it took to read you.",
-  "The cat watched the ripples spread and did not flinch, because it has seen the dark do stranger things and keep its secrets. It understands the language of small disturbances — a twitch, a hush, a question asked too carefully. Yours told it more than you meant it to.",
-];
-
 const numberWords = [
   "zero", "one", "two", "three", "four",
   "five", "six", "seven", "eight", "nine",
-];
-
-// A mysterious, self-mirroring middle passage, composed from three pools so it
-// effectively never repeats. It describes the ripples, then turns into a mirror.
-const mirrorOpenings = [
-  "The ripples move outward through the dark, each one carrying a tremor that passes over fur and floor and the long quiet of the room.",
-  "The ripples spread the way thoughts do at night, widening into the black until they touch the edges of things you cannot name.",
-  "The ripples travel out and do not return, leaving the surface changed in ways too small to see and too deep to undo.",
-  "The ripples cross the water like questions crossing a mind, overlapping, interfering, never quite settling into stillness.",
-  "The ripples open in rings, one inside the next, the way a person keeps a self inside a self inside the face they show the room.",
-];
-const mirrorMiddles = [
-  "What stares back from the water is not the cat and not the dark, but the shape of your own attention, bent slightly by what you were hoping to find.",
-  "Look long enough and the surface stops showing the room and starts showing you — the wanting under the wording, the fear folded inside the calm.",
-  "The water does not answer; it reflects, and what it reflects is the exact thing you have been trying not to look at.",
-  "In the trembling surface you can almost make out a face, and it is yours, asking a question it already knows the answer to.",
-  "Every ripple is a small mirror, and turned the right way each one shows the same thing: a person standing in the dark, asking to be told who they are.",
-];
-const mirrorCloses = [
-  "What we ask of the dark says more about us than the dark could ever say back.",
-  "The answer was never the point; the asking is the confession, and you have already made it.",
-  "You came for a verdict and met a reflection, which is the only honest thing the night ever gives.",
-  "Whatever the cat decides, the truer reading is the one you just made of yourself.",
-  "The shape of your wondering was drawn long before any answer arrived, and it is unmistakably yours.",
 ];
 
 // All 48 Laws of Power, each rewritten as a long personal reading: first the
@@ -244,13 +233,8 @@ export function ResultScreen({
   const word = categories[hsh % categories.length];
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
   const reading = lawReadings[hsh % lawReadings.length];
-  const catIntro = catIntros[(hsh >> 9) % catIntros.length];
   const rippleWord = numberWords[num] ?? String(num);
-  const mirror = [
-    mirrorOpenings[(hsh >> 2) % mirrorOpenings.length],
-    mirrorMiddles[(hsh >> 8) % mirrorMiddles.length],
-    mirrorCloses[(hsh >> 14) % mirrorCloses.length],
-  ].join(" ");
+  const lore = categoryLore[word];
 
   return (
     <motion.div
@@ -341,8 +325,8 @@ export function ResultScreen({
           <p>
             The Cat Cloud answered with {rippleWord} ripple{num === 1 ? "" : "s"}.
           </p>
-          <p>{mirror}</p>
-          <p>{catIntro}</p>
+          <p>{lore.body}</p>
+          <p className="text-white/50">{lore.close}</p>
           <p className="pt-2 text-white/95">
             Well — the question you asked says a lot about you.
           </p>
