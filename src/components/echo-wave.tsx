@@ -59,6 +59,23 @@ export function EchoWave({
 
     // ring buffer of impact times shared with the shader
     const impacts: number[] = new Array(MAX_RIPPLES).fill(-100);
+    // matching ring buffer of impact centers (where each drop landed)
+    const centers: THREE.Vector2[] = Array.from(
+      { length: MAX_RIPPLES },
+      () => new THREE.Vector2(0, 0)
+    );
+
+    // stable pseudo-random landing spot for a given drop cycle
+    const centerFor = (cyc: number): [number, number] => {
+      const a = Math.sin(cyc * 12.9898) * 43758.5453;
+      const b = Math.sin(cyc * 78.233) * 43758.5453;
+      const rx = a - Math.floor(a);
+      const rz = b - Math.floor(b);
+      const radius = 11.0; // scatter radius across the water surface
+      const ang = rx * Math.PI * 2;
+      const dist = Math.sqrt(rz) * radius;
+      return [Math.cos(ang) * dist, Math.sin(ang) * dist];
+    };
 
     const material = new THREE.ShaderMaterial({
       transparent: true,
@@ -66,6 +83,7 @@ export function EchoWave({
       uniforms: {
         uTime: { value: 0 },
         uImpacts: { value: impacts },
+        uCenters: { value: centers },
         uSize: { value: 130 * Math.min(window.devicePixelRatio, 2) },
         uAmp: { value: 6.5 },
       },
@@ -73,13 +91,14 @@ export function EchoWave({
         #define MAX ${MAX_RIPPLES}
         uniform float uTime;
         uniform float uImpacts[MAX];
+        uniform vec2 uCenters[MAX];
         uniform float uSize;
         uniform float uAmp;
         varying float vB;
 
         void main() {
           vec3 pos = position;
-          float r = length(pos.xz);
+          float r0 = length(pos.xz);
 
           float disp = 0.0;
           float crest = 0.0;
@@ -91,6 +110,9 @@ export function EchoWave({
             float td = uTime - imp;
             if (td < 0.0) continue;
 
+            // distance from THIS ripple's own landing point
+            float r = length(pos.xz - uCenters[i]);
+
             float front  = td * 11.0;                          // expanding front
             float inside = smoothstep(front, front - 10.0, r); // waves within circle
             float ampR   = 1.0 / (1.0 + r * 0.12);             // spread / distance decay
@@ -98,7 +120,7 @@ export function EchoWave({
             float tDecay = exp(-td * 0.5);                      // calms over time
             float waves  = osc * inside * ampR * tDecay;
 
-            // gentle central splash + rebound at impact (kept low so no tall peak)
+            // gentle local splash + rebound at impact (kept low so no tall peak)
             float splash = exp(-r * r * 0.06) * exp(-td * 5.0) * (1.0 - exp(-td * 40.0));
 
             disp += uAmp * waves + uAmp * 0.45 * splash;
@@ -106,8 +128,8 @@ export function EchoWave({
           }
 
           // faint ambient breathing so the surface is never fully still
-          float center = smoothstep(34.0, 0.0, r);
-          float ambient = 0.10 * sin(r * 0.25 - uTime * 1.2) * center;
+          float center = smoothstep(34.0, 0.0, r0);
+          float ambient = 0.10 * sin(r0 * 0.25 - uTime * 1.2) * center;
           disp += ambient;
 
           pos.y = disp;
@@ -188,18 +210,22 @@ export function EchoWave({
         const cycleStart = t0 + cyc * period;
         const localT = t - cycleStart;
 
+        const [cx, cz] = centerFor(cyc); // this drop's landing spot
+
         if (localT < fallDur) {
-          // drop is falling toward the surface
+          // drop is falling toward its (scattered) landing spot
           const f = localT / fallDur;
           drop.visible = true;
-          drop.position.set(0, fallTop * (1 - f * f), 0);
+          drop.position.set(cx, fallTop * (1 - f * f), cz);
           dropMat.opacity = Math.min(1, f * 2.2);
         }
 
         // log the impact once, when this drop lands
         if (localT >= fallDur && cyc > recorded) {
           recorded = cyc;
-          impacts[writePtr % MAX_RIPPLES] = cycleStart + fallDur;
+          const slot = writePtr % MAX_RIPPLES;
+          impacts[slot] = cycleStart + fallDur;
+          centers[slot].set(cx, cz);
           writePtr++;
         }
       }
