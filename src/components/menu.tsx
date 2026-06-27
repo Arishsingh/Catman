@@ -6,7 +6,7 @@ import { useLenis } from "lenis/react";
 
 const items = ["Home"];
 
-const morph = { duration: 0.4, ease: [0.45, 0, 0.2, 1] as const };
+const morph = { duration: 0.4, ease: [0.45, 0, 0.2, 1] as [number, number, number, number] };
 
 export function Menu() {
   const [open, setOpen] = useState(false);
@@ -68,7 +68,7 @@ export function Menu() {
                   transition={{
                     delay: 0.12 + i * 0.07,
                     duration: 0.5,
-                    ease: [0.16, 1, 0.3, 1],
+                    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
                   }}
                 >
                   {label}

@@ -55,7 +55,7 @@ export function LogoReveal({
             animate={{ scale: [0.06, 1], opacity: [0, 1] }}
             transition={{
               duration: growIn / 1000,
-              ease: [0.16, 1, 0.3, 1],
+              ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
               repeat: cycles - 1,
               repeatType: "loop",
             }}

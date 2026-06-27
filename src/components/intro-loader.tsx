@@ -22,7 +22,7 @@ export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
     lenis?.stop();
     const controls = animate(count, 100, {
       duration,
-      ease: [0.16, 1, 0.3, 1],
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       onComplete: () => {
 
         setTimeout(() => setDone(true), 250);
@@ -37,7 +37,7 @@ export function IntroLoader({ duration = 2.2 }: { duration?: number }) {
         <motion.div
           className="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-black text-white"
           exit={{ y: "-100%" }}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] as [number, number, number, number] }}
         >
           <motion.span
             className="font-mono text-[18vw] leading-none tracking-tighter sm:text-[12vw]"

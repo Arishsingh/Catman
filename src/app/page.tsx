@@ -117,7 +117,7 @@ export default function Home() {
               className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.3] tracking-[0.12em] [word-spacing:0.3em] text-3xl sm:text-5xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: REVEAL_DELAY, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ delay: REVEAL_DELAY, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             >
               If you could<span className="-ml-[0.12em]">,</span>
               <br />
@@ -132,7 +132,7 @@ export default function Home() {
               transition={{
                 delay: REVEAL_DELAY + 0.15,
                 duration: 0.9,
-                ease: [0.16, 1, 0.3, 1],
+                ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
               }}
             >
               <input

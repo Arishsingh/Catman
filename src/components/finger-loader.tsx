@@ -96,7 +96,7 @@ export function DrummingHand({ size = 180 }: { size?: number }) {
           animate={{ rotate: [0, -24, 0] }}
           transition={{
             duration: tap,
-            ease: [0.45, 0, 0.55, 1],
+            ease: [0.45, 0, 0.55, 1] as [number, number, number, number],
             repeat: Infinity,
             repeatDelay: period - tap,
             delay: i * step,
