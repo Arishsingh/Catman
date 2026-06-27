@@ -61,6 +61,26 @@ const laws = [
   "Let them guess at your shape; a thing without edges cannot be cornered.",
   "Strike once, cleanly, and never explain the strike.",
 ];
+const observations = [
+  "The cat has watched you longer than you would like to admit, and it has noticed the pattern in how you reach for things.",
+  "There is a hunger under this question, the kind that pretends to be patience while it paces the room.",
+  "You measure the world in outcomes, in wins and losses, when the cat measures only in warmth and distance.",
+  "Beneath the calm wording lies a fear you have not named, and naming it is half of mastering it.",
+  "You are braver than your question sounds, and more cautious than you pretend to be.",
+  "The thing you fear losing is the same thing you refuse to hold loosely.",
+  "You ask the night for permission you could simply grant yourself.",
+  "Every question you ask is a small confession of what you cannot yet control.",
+];
+const directives = [
+  "So watch how the cat does it: it commits to nothing it cannot abandon, and abandons nothing it has truly chosen.",
+  "So do as the predator does — wait, weigh, and then move all at once, leaving no room for second-guessing.",
+  "So gather your intent quietly, show the world only the result, and let them wonder how you arrived.",
+  "So stop asking permission of shadows; decide, and let the decision become the truth.",
+  "So hold your power in reserve, spend it once, and spend it where it cannot be undone.",
+  "So let go of the outcome you are clutching, and watch how quickly it turns and follows you.",
+  "So make yourself difficult to read, and the room will arrange itself around your silence.",
+  "So move first, apologize never, and let the world catch up to the shape you have already taken.",
+];
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -182,7 +202,9 @@ export function ResultScreen({
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
   const reading = [
     openings[hsh % openings.length],
+    observations[(hsh >> 4) % observations.length],
     insights[(hsh >> 7) % insights.length],
+    directives[(hsh >> 10) % directives.length],
     laws[(hsh >> 13) % laws.length],
   ].join(" ");
 
@@ -273,7 +295,19 @@ export function ResultScreen({
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
           <p>The Cat Cloud answered with three ripples.</p>
+          <p>
+            They move outward through the dark, carrying small tremors that pass
+            over fur and floor and the long quiet of the room. Cats, like us,
+            keep their fears close. They freeze at a sound that may be nothing,
+            or melt into stillness when something unseen shifts nearby — instinct
+            bending what is real into what might be.
+          </p>
           <p>{reading}</p>
+          <p className="text-white/50">
+            What we ask of another creature often says more about us than about
+            them — the shape of our wondering, drawn long before any answer
+            arrives.
+          </p>
         </motion.div>
 
         <motion.div
