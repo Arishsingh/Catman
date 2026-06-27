@@ -65,8 +65,11 @@ export default function Home() {
   };
 
   const restart = () => {
-    setQuestion("");
-    setPhase("input");
+    // return to home within 2 seconds of pressing Restart
+    setTimeout(() => {
+      setQuestion("");
+      setPhase("input");
+    }, 2000);
   };
 
   return (
