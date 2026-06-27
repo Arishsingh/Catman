@@ -71,7 +71,7 @@ export function Menu() {
                   key={label}
                   href="#"
                   onClick={() => setOpen(false)}
-                  className="bg-white/10 px-4 py-1.5 font-mono text-2xl whitespace-nowrap transition-colors hover:bg-white/20 sm:text-3xl"
+                  className="bg-white/10 px-3 py-1 font-mono text-base whitespace-nowrap transition-colors hover:bg-white/20 sm:text-lg"
                   initial={{ x: 60, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: 60, opacity: 0 }}
