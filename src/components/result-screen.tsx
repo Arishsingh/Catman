@@ -303,6 +303,14 @@ export function ResultScreen({
           animate="show"
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
+          <p>The Cat Cloud answered with three ripples.</p>
+          <p>
+            They move outward through the dark, carrying small tremors that pass
+            over fur and floor and the long quiet of the room. Cats, like us,
+            keep their fears close. They freeze at a sound that may be nothing,
+            or melt into stillness when something unseen shifts nearby — instinct
+            bending what is real into what might be.
+          </p>
           <p>{catIntro}</p>
           <p className="pt-2 text-white/95">
             Well — the question you asked says a lot about you.
