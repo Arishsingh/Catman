@@ -22,40 +22,44 @@ function hash(s: string) {
   return h;
 }
 
-// what the asking reveals — read through the lens of the 48 Laws of Power
-const powerReadings = [
-  {
-    law: "Law 3 — Conceal Your Intentions",
-    text: "You didn't come here for a yes or a no. You came to hear someone else say out loud the thing you already decided. The question is a mask. You wear it well.",
-  },
-  {
-    law: "Law 4 — Always Say Less Than Necessary",
-    text: "You ask short questions and hide long ones behind them. The cat noticed. You give away less than you think you do — but more than you mean to.",
-  },
-  {
-    law: "Law 6 — Court Attention",
-    text: "Part of you didn't want an answer at all. You wanted to be the kind of person who asks the cat. Admit it — there's an audience in your head, and you're performing for it.",
-  },
-  {
-    law: "Law 10 — Avoid the Unhappy and Unlucky",
-    text: "This question has been circling you for a while, hasn't it. You keep feeding it. The cat suggests: stop petting the thing that scratches you.",
-  },
-  {
-    law: "Law 13 — Appeal to Self-Interest",
-    text: "You framed this as curiosity, but it's about what you stand to gain. No shame in it — the honest schemer sleeps better than the noble liar.",
-  },
-  {
-    law: "Law 16 — Use Absence to Increase Respect",
-    text: "You want a thing by clutching at it. The cat, who is an expert in being wanted, advises the opposite: leave the room. Watch what comes looking for you.",
-  },
-  {
-    law: "Law 28 — Enter Action With Boldness",
-    text: "You already know the answer. You're just looking for a witness before you leap. Consider this your witness. Hesitation is the only wrong move left.",
-  },
-  {
-    law: "Law 48 — Assume Formlessness",
-    text: "You like a plan with edges. But the thing you're asking about won't hold still, and neither should you. Bend with it. The cat never plans; the cat always lands.",
-  },
+// A reading is composed from three fragment pools (opening / insight / law),
+// each indexed by a different slice of the hash. The combinations make it
+// effectively unique per question, and it reads as one cat-voiced paragraph.
+const openings = [
+  "You didn't really come for a yes or a no — you came for permission to do what you'd already chosen.",
+  "The question you typed is a mask; the real one hides behind it, and the cat sees both.",
+  "You ask this lightly, but it has been circling you for a long while now.",
+  "Some part of you is performing even here, asking the cat as if someone were watching.",
+  "You called this curiosity, though it is really about what you stand to gain.",
+  "You want the certainty handed to you, yet you already suspect the answer.",
+  "You phrased it so carefully, half-hoping the wording might bend the truth.",
+  "You came looking for a sign, which means you have quietly stopped trusting your own.",
+  "You ask the smallest version of a much larger question, and the cat is not fooled.",
+  "You hold this question out like a treat, expecting the world to come when called.",
+];
+const insights = [
+  "Power was never in the asking — it was in deciding before you asked.",
+  "What you reveal in a question, you can never quite take back.",
+  "The one who needs the answer least is always the one who controls it.",
+  "Wanting a thing too openly is the surest way to lose it.",
+  "Boldness, not hesitation, is the only move you have left.",
+  "Say less, and the silence will rearrange itself in your favor.",
+  "The patient creature eats; the anxious one only watches the door.",
+  "Whatever you chase will run, and whatever you ignore will follow you home.",
+  "Certainty is a thing you build, not a thing you are given.",
+  "The mask you wear long enough stops being a mask at all — choose it well.",
+];
+const laws = [
+  "The cat already knew, and the cat said nothing — learn from that.",
+  "Conceal your intent, and even a no becomes useful to you.",
+  "Leave the room, and watch carefully what comes looking for you.",
+  "Land first; decide where you meant to be afterward.",
+  "Keep your reasons to yourself and your claws for later.",
+  "Move as though you have already won, and the winning follows.",
+  "Be still until the moment is unmistakably yours.",
+  "Want nothing visibly, and you may quietly have everything.",
+  "Let them guess at your shape; a thing without edges cannot be cornered.",
+  "Strike once, cleanly, and never explain the strike.",
 ];
 
 const fade = {
@@ -176,7 +180,11 @@ export function ResultScreen({
   const num = (hsh % 9) + 1;
   const word = categories[hsh % categories.length];
   const answer = (hsh >> 3) % 2 === 0 ? "YES" : "NO";
-  const reading = powerReadings[(hsh >> 5) % powerReadings.length];
+  const reading = [
+    openings[hsh % openings.length],
+    insights[(hsh >> 7) % insights.length],
+    laws[(hsh >> 13) % laws.length],
+  ].join(" ");
 
   return (
     <motion.div
@@ -265,40 +273,11 @@ export function ResultScreen({
           className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
         >
           <p>The Cat Cloud answered with three ripples.</p>
-          <p>
-            They move outward through the dark, carrying small tremors that pass
-            over fur and floor and the long quiet of the room. Cats, like us,
-            keep their fears close. They freeze at a sound that may be nothing,
-            or melt into stillness when something unseen shifts nearby — instinct
-            bending what is real into what might be.
-          </p>
-          <p className="text-white/50">
-            What we ask of another creature often says more about us than about
-            them — the shape of our wondering, drawn long before any answer
-            arrives.
-          </p>
+          <p>{reading}</p>
         </motion.div>
 
         <motion.div
           custom={4}
-          variants={fade}
-          initial="hidden"
-          animate="show"
-          className="mt-16 border-t border-white/15 pt-10"
-        >
-          <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/70">
-            What your question says about you
-          </p>
-          <p className="mt-4 font-['Share_Tech'] text-lg uppercase tracking-[0.15em] text-white/60">
-            {reading.law}
-          </p>
-          <p className="mt-4 font-mono text-base leading-relaxed text-white/85">
-            {reading.text}
-          </p>
-        </motion.div>
-
-        <motion.div
-          custom={5}
           variants={fade}
           initial="hidden"
           animate="show"
@@ -311,7 +290,7 @@ export function ResultScreen({
         </motion.div>
 
         <motion.div
-          custom={6}
+          custom={5}
           variants={fade}
           initial="hidden"
           animate="show"
