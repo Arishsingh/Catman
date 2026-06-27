@@ -327,9 +327,7 @@ export function ResultScreen({
           </p>
           <p>{lore.body}</p>
           <p className="text-white/50">{lore.close}</p>
-          <p className="pt-2 text-white/95">
-            btw the question you asked says a lot about you.
-          </p>
+          <p className="pt-2 text-white/95">btw</p>
           <p>{reading}</p>
         </motion.div>
 
