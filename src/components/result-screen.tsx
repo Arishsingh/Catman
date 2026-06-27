@@ -22,12 +22,24 @@ function hash(s: string) {
   return h;
 }
 
-// What the cat thinks of itself — varied by hash, sets the tone first.
+// What the cat is doing in the dark — varied by hash, sets a mysterious tone.
 const catIntros = [
   "The cat does not answer the way you want it to. It watches, it waits, it gives affection on its own terms and attention only when it decides you have earned it — never because it was asked. That is the first thing to understand about the creature you came to.",
   "The cat owes you nothing and pretends nothing. It takes the one patch of sun, ignores your calling, and comes close only when it has judged you worth the closeness. It is the most honest thing in this dark room, and it has just looked straight through you.",
   "A cat keeps its fears close and its intentions closer. It freezes at a sound that may be nothing, melts into stillness when the unseen shifts, and lets you guess at all of it. It survives by being unreadable — and it has been reading you this whole time.",
   "The cat answered with three ripples through the dark, the way it answers everything: without hurry, without explanation, and without the smallest need for your approval. It moves through the world owing no one a reason, and it wonders why you cannot.",
+  "Somewhere in the black the cat is sitting perfectly still, its eyes two coins of reflected nothing, watching a thing in the corner that you will never see. It blinked once, slowly, which in its language is the closest it comes to mercy. Then it turned its attention, at last, to you.",
+  "The cat has walked through nine rooms tonight that do not exist on any floor plan, and it returned smelling of cold air and old secrets. It will not tell you where it went. It never does — it only carries the dark back in its fur and lets a little of it fall on whoever asked.",
+  "A cat will stare at an empty doorway for an hour, certain something is there, and it is almost always right. It lives half in this room and half in the one just behind it, the one you can only feel on the back of your neck. Tonight it stepped briefly into your half to deliver this.",
+  "The cat purrs not because it is happy but because it has decided to, the way it decides everything — quietly, completely, and without telling you why. The sound is a door closing somewhere you cannot follow. Behind it, the cat is already thinking about your question.",
+  "It arrived without a sound, the way cats always do, as if the floor had agreed not to mention it. It has been in the room far longer than you realized, folded into a shadow, listening. The thing about a cat is that by the time you notice it, it has already finished deciding about you.",
+  "The cat hunts things that make no noise and leaves no trace, and it catches them anyway. It brought one back tonight and set it, invisible, at your feet — a gift, or a warning, in the way only a cat can mean both at once. You will not know which until much later.",
+  "A cat sleeps three-quarters of its life and somehow misses nothing. Even now, with its eyes half-closed and its breathing slow, it has counted every fear you walked in with. It is not resting. It is simply waiting for you to stop pretending you came here for a yes or a no.",
+  "The cat turned its head toward a sound only it could hear, held that pose for a long, weightless moment, and then looked back at you as though you had been the sound all along. It knows things it did not learn. It has been somewhere you have not, and it came back with your answer.",
+  "Out in the dark the cat moves like spilled ink finding the cracks, pouring itself into spaces that should be too small, vanishing and reappearing a room away. Nothing holds it and nothing surprises it. It paused its endless circuit of the night only to consider what you asked.",
+  "The cat keeps one ear turned to the world you can see and one turned to the one you cannot, and it trusts the second far more than the first. It heard your question arrive in both at once. What it tells you now comes from the side of the dark you are not allowed to enter.",
+  "A cat does not chase what it wants; it waits until the want comes to it, and it always does. It has been sitting in this stillness so long that the room has begun to arrange itself around its patience. Your question disturbed that stillness for exactly as long as it took to read you.",
+  "The cat watched the three ripples spread and did not flinch, because it has seen the dark do stranger things and keep its secrets. It understands the language of small disturbances — a twitch, a hush, a question asked too carefully. Yours told it more than you meant it to.",
 ];
 
 // All 48 Laws of Power, each rewritten as a long personal reading: first the
