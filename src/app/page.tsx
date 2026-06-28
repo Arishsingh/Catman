@@ -114,7 +114,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <motion.h1
-              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.3] tracking-[0.12em] [word-spacing:0.3em] text-3xl sm:text-5xl"
+              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.25] tracking-[0.12em] [word-spacing:0.3em] text-[clamp(1.5rem,4.5vw,3.75rem)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: REVEAL_DELAY, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
@@ -126,7 +126,7 @@ export default function Home() {
 
             <motion.form
               onSubmit={submit}
-              className="mt-24 w-full max-w-[1600px]"
+              className="mt-[clamp(3rem,7vw,6rem)] w-full max-w-[min(92vw,1600px)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -140,10 +140,10 @@ export default function Home() {
                 onChange={(e) => setQuestion(e.target.value)}
                 autoFocus
                 aria-label="Your question"
-                className="w-full border-b border-white/70 bg-transparent pb-4 text-center font-mono text-xl caret-white outline-none focus:border-white"
+                className="w-full border-b border-white/70 bg-transparent pb-[clamp(0.5rem,1vw,1rem)] text-center font-mono text-[clamp(1rem,2.2vw,1.5rem)] caret-white outline-none focus:border-white"
               />
 
-              <div className="mt-10 space-y-6 text-center font-mono text-lg leading-relaxed text-white">
+              <div className="mt-[clamp(2rem,4vw,2.5rem)] space-y-[clamp(1rem,2vw,1.5rem)] text-center font-mono text-[clamp(0.85rem,1.5vw,1.15rem)] leading-relaxed text-white">
                 <p>Type a question that can be answered by YES or NO.</p>
                 <p className="mx-auto max-w-5xl text-white/90">
                   Your question to cats can be about them, about you, about the
