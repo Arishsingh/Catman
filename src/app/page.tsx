@@ -194,14 +194,6 @@ export default function Home() {
               />
             </motion.div>
 
-            <motion.p
-              className="absolute left-1/2 top-[18%] -translate-x-1/2 font-mono text-sm uppercase tracking-[0.35em] text-white/70"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            >
-              Listening…
-            </motion.p>
           </motion.div>
         )}
 
