@@ -84,7 +84,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ delay: REVEAL_DELAY, duration: 0.8 }}
       >
-        <span className="font-['Maiden_Orange'] text-base font-bold uppercase tracking-[0.35em] sm:text-lg">
+        <span className="font-['Maiden_Orange'] font-bold uppercase tracking-[0.35em] text-[clamp(1.25rem,2vw,1.85rem)]">
           Cat Cloud
         </span>
         <Menu />
