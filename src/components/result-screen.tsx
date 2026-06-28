@@ -151,7 +151,7 @@ function MapCluster() {
     const ctx = c.getContext("2d");
     if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio, 2);
-    const size = Math.min(window.innerWidth, window.innerHeight) * 0.92;
+    const size = Math.min(window.innerWidth * 0.92, window.innerHeight * 0.92, 640);
     c.width = size * dpr;
     c.height = size * dpr;
     ctx.scale(dpr, dpr);
@@ -209,7 +209,7 @@ function MapCluster() {
     <canvas
       ref={ref}
       className="pointer-events-none fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70"
-      style={{ width: "92vmin", height: "92vmin" }}
+      style={{ width: "min(92vw,40rem)", height: "min(92vw,40rem)" }}
     />
   );
 }
@@ -242,7 +242,7 @@ export function ResultScreen({
       <motion.svg
         viewBox="0 0 500 500"
         aria-hidden
-        className="pointer-events-none fixed left-1/2 top-1/2 h-[min(92vw,92vh)] w-[min(92vw,92vh)] -translate-x-1/2 -translate-y-1/2 fill-white/12"
+        className="pointer-events-none fixed left-1/2 top-1/2 h-[min(92vw,46rem)] w-[min(92vw,46rem)] -translate-x-1/2 -translate-y-1/2 fill-white/12"
         animate={{ rotate: 360 }}
         transition={{ duration: 110, repeat: Infinity, ease: "linear" }}
       >
