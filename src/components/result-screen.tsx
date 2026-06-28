@@ -131,7 +131,7 @@ function Cross({ className }: { className: string }) {
 
 function Glyph() {
   return (
-    <svg width="120" height="120" viewBox="0 0 200 200" className="fill-white">
+    <svg viewBox="0 0 200 200" className="fill-white h-[clamp(64px,8vw,96px)] w-[clamp(64px,8vw,96px)]">
       <path d="M100 70 C112 88 112 112 100 130 C88 112 88 88 100 70 Z" />
       <path d="M82 42 C92 36 108 36 118 42 C108 48 92 48 82 42 Z" />
       <path d="M82 158 C92 164 108 164 118 158 C108 152 92 152 82 158 Z" />
@@ -266,7 +266,7 @@ export function ResultScreen({
         }}
       />
 
-      <div className="relative mx-auto flex min-h-svh max-w-2xl flex-col px-8 py-24">
+      <div className="relative mx-auto flex min-h-svh max-w-2xl flex-col px-[clamp(1.5rem,5vw,3rem)] py-[clamp(3.5rem,9vh,6rem)]">
         <span className="pointer-events-none absolute inset-y-12 left-0 w-px bg-white/15" />
         <span className="pointer-events-none absolute inset-y-12 right-0 w-px bg-white/15" />
         <Cross className="left-0 top-10 -translate-x-1/2" />
@@ -279,7 +279,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="text-center font-['Share_Tech'] text-4xl"
+          className="text-center font-['Share_Tech'] text-[clamp(1.25rem,2.5vw,1.75rem)]"
         >
           {num}
         </motion.p>
@@ -299,7 +299,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-8 text-center font-['Share_Tech'] text-4xl font-bold uppercase tracking-[0.1em] sm:text-5xl"
+          className="mt-6 text-center font-['Share_Tech'] font-bold uppercase tracking-[0.1em] text-[clamp(1.5rem,3.5vw,2.5rem)]"
         >
           {word}
         </motion.h2>
@@ -309,7 +309,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-14 space-y-6 font-mono text-base leading-relaxed text-white/85"
+          className="mt-12 space-y-5 font-mono leading-relaxed text-white/85 text-[clamp(0.8rem,1.3vw,0.95rem)]"
         >
           <p>
             The Cat Cloud answered with {rippleWord} ripple{num === 1 ? "" : "s"}.
@@ -326,10 +326,10 @@ export function ResultScreen({
           animate="show"
           className="mt-16 border-t border-white/15 pt-10 text-center"
         >
-          <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/70">
+          <p className="font-mono uppercase tracking-[0.2em] text-white/70 text-[clamp(0.7rem,1.1vw,0.8rem)]">
             so — the answer to your question is
           </p>
-          <p className="mt-3 font-['Share_Tech'] text-6xl font-bold">{answer}</p>
+          <p className="mt-3 font-['Share_Tech'] font-bold text-[clamp(2.25rem,5vw,3.25rem)]">{answer}</p>
         </motion.div>
 
         <motion.div
