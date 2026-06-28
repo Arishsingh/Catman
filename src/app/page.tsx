@@ -114,7 +114,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <motion.h1
-              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.25] tracking-[0.12em] [word-spacing:0.3em] text-[clamp(1.5rem,4.5vw,3.75rem)]"
+              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.25] tracking-[0.12em] [word-spacing:0.3em] text-[clamp(1.35rem,3.2vw,2.75rem)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: REVEAL_DELAY, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
