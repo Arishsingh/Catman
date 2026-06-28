@@ -109,12 +109,12 @@ export default function Home() {
         {phase === "input" && (
           <motion.main
             key="input"
-            className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6"
+            className="relative z-10 flex min-h-svh flex-col items-center justify-center px-[clamp(1.5rem,9vw,11rem)]"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
             <motion.h1
-              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.25] tracking-[0.12em] [word-spacing:0.3em] text-[clamp(1.35rem,3.2vw,2.75rem)]"
+              className="text-center font-['Maiden_Orange'] font-bold uppercase leading-[1.25] tracking-[0.12em] [word-spacing:0.3em] text-[clamp(1.25rem,2.4vw,2.1rem)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: REVEAL_DELAY, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
@@ -126,7 +126,7 @@ export default function Home() {
 
             <motion.form
               onSubmit={submit}
-              className="mt-[clamp(3rem,7vw,6rem)] w-full max-w-[min(92vw,1600px)]"
+              className="mt-[clamp(3rem,7vw,6rem)] w-full max-w-[1100px]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
