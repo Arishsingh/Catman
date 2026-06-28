@@ -242,7 +242,7 @@ export function ResultScreen({
       <motion.svg
         viewBox="0 0 500 500"
         aria-hidden
-        className="pointer-events-none fixed left-1/2 top-1/2 h-[150vmin] w-[150vmin] -translate-x-1/2 -translate-y-1/2 fill-white/12"
+        className="pointer-events-none fixed left-1/2 top-1/2 h-[min(92vw,92vh)] w-[min(92vw,92vh)] -translate-x-1/2 -translate-y-1/2 fill-white/12"
         animate={{ rotate: 360 }}
         transition={{ duration: 110, repeat: Infinity, ease: "linear" }}
       >
