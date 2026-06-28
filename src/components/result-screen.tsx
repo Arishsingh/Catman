@@ -266,7 +266,7 @@ export function ResultScreen({
         }}
       />
 
-      <div className="relative mx-auto flex min-h-svh max-w-2xl flex-col px-[clamp(1.5rem,5vw,3rem)] py-[clamp(3.5rem,9vh,6rem)]">
+      <div className="relative mx-auto flex min-h-svh w-[min(90vw,40rem)] flex-col px-[clamp(1.25rem,4vw,2.5rem)] py-[clamp(3.5rem,9vh,6rem)]">
         <span className="pointer-events-none absolute inset-y-12 left-0 w-px bg-white/15" />
         <span className="pointer-events-none absolute inset-y-12 right-0 w-px bg-white/15" />
         <Cross className="left-0 top-10 -translate-x-1/2" />
