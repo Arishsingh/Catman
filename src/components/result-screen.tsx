@@ -266,13 +266,13 @@ export function ResultScreen({
         }}
       />
 
-      <div className="relative mx-auto flex min-h-svh w-[min(90vw,40rem)] flex-col px-[clamp(1.25rem,4vw,2.5rem)] py-[clamp(3.5rem,9vh,6rem)]">
-        <span className="pointer-events-none absolute inset-y-12 left-0 w-px bg-white/15" />
-        <span className="pointer-events-none absolute inset-y-12 right-0 w-px bg-white/15" />
-        <Cross className="left-0 top-10 -translate-x-1/2" />
-        <Cross className="right-0 top-10 translate-x-1/2" />
-        <Cross className="bottom-10 left-0 -translate-x-1/2" />
-        <Cross className="bottom-10 right-0 translate-x-1/2" />
+      <div className="relative mx-auto flex min-h-svh w-[min(90vw,40rem)] flex-col px-[clamp(1.25rem,4vw,2.5rem)] py-[clamp(2rem,5vh,3.5rem)]">
+        <span className="pointer-events-none absolute inset-y-8 left-0 w-px bg-white/15" />
+        <span className="pointer-events-none absolute inset-y-8 right-0 w-px bg-white/15" />
+        <Cross className="left-0 top-6 -translate-x-1/2" />
+        <Cross className="right-0 top-6 translate-x-1/2" />
+        <Cross className="bottom-6 left-0 -translate-x-1/2" />
+        <Cross className="bottom-6 right-0 translate-x-1/2" />
 
         <motion.p
           custom={0}
@@ -289,7 +289,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-8 flex justify-center"
+          className="mt-4 flex justify-center"
         >
           <Glyph />
         </motion.div>
@@ -299,7 +299,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-6 text-center font-['Share_Tech'] font-bold uppercase tracking-[0.1em] text-[clamp(1.5rem,3.5vw,2.5rem)]"
+          className="mt-4 text-center font-['Share_Tech'] font-bold uppercase tracking-[0.1em] text-[clamp(1.5rem,3.5vw,2.5rem)]"
         >
           {word}
         </motion.h2>
@@ -309,7 +309,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-12 space-y-5 font-mono leading-relaxed text-white/85 text-[clamp(0.8rem,1.3vw,0.95rem)]"
+          className="mt-7 space-y-3 font-mono leading-relaxed text-white/85 text-[clamp(0.8rem,1.3vw,0.95rem)]"
         >
           <p>
             The Cat Cloud answered with {rippleWord} ripple{num === 1 ? "" : "s"}.
@@ -324,7 +324,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-16 border-t border-white/15 pt-10 text-center"
+          className="mt-8 border-t border-white/15 pt-6 text-center"
         >
           <p className="font-mono uppercase tracking-[0.2em] text-white/70 text-[clamp(0.7rem,1.1vw,0.8rem)]">
             so — the answer to your question is
@@ -337,7 +337,7 @@ export function ResultScreen({
           variants={fade}
           initial="hidden"
           animate="show"
-          className="mt-auto flex items-center justify-between pt-16 font-mono text-sm uppercase tracking-[0.2em]"
+          className="mt-auto flex items-center justify-between pt-8 font-mono text-sm uppercase tracking-[0.2em]"
         >
           <button onClick={onRestart} className="transition-opacity hover:opacity-60">
             Restart
