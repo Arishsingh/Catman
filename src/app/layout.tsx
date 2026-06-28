@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -15,8 +15,14 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Batman — Next.js + shadcn + Motion",
-  description: "Next.js 16 starter with shadcn/ui and Motion animations.",
+  title: "Cat Cloud",
+  description: "Ask a cat a yes-or-no question and the dark answers back.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
